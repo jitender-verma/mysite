@@ -1,0 +1,62 @@
+Pinterest
+
+You can use the API to create, edit and delete Pins for authenticated users. You can also fetch Pins, boards and the Pins on a board for any user.
+
+https://developers.pinterest.com/docs/api/pins/?
+
+Buffer
+
+Facebook
+Facebook Page - 
+https://developers.facebook.com/docs/graph-api/reference/page/
+Facebook Group
+https://developers.facebook.com/docs/graph-api/reference/v6.0/group
+
+
+Instagram 
+
+
+Instagram Graph API
+
+getting and managing published photos, videos, and stories
+https://developers.facebook.com/docs/instagram-api/reference/user/media#get-media
+https://developers.facebook.com/docs/instagram-api/reference/media
+
+getting basic data about other Instagram Business users and Creators
+https://developers.facebook.com/docs/instagram-api/guides/business-discovery
+
+moderating comments and their replies
+https://developers.facebook.com/docs/instagram-api/guides/comment-moderation
+
+measuring media and profile interaction
+https://developers.facebook.com/docs/instagram-api/guides/insights
+
+
+discovering hashtagged media
+https://developers.facebook.com/docs/instagram-api/guides/hashtag-search
+
+
+discovering @mentions
+https://developers.facebook.com/docs/instagram-api/guides/mentions
+
+
+publishing photos and videos (currently in closed beta)
+https://developers.facebook.com/docs/instagram-api/guides/content-publishing
+
+
+
+Twitter
+https://developer.twitter.com/en/docs/tweets/post-and-engage/guides/tweet-availability
+
+See Tweets from your timeline (including protected Tweets) as well as your Lists and collections.
+See your Twitter profile information and account settings.
+See accounts you follow, mute, and block.
+Follow and unfollow accounts for you.
+Update your profile and account settings.
+Post and delete Tweets for you, and engage with Tweets posted by others ( reply to a Tweet, Retweet, etc.) for you.
+Create, manage, and delete Lists and collections for you.
+Mute, block, and report accounts for you.
+
+
+ 
+

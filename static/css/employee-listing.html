@@ -1,0 +1,1128 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Employee Listing{% endblock %}
+{% load custom_template_tags %}
+{% block content %}
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+  <div class="">
+
+    <!-- for mobile device -->
+    <div class="row">
+      <div class="left-header-part mobile-device">
+        <div class="country-wrapper">
+
+          <div class="for-mobile">
+            <div class="country-field">
+              <a href="#" title=""><i class="fas fa-clock"></i> 10:00 am </a>
+              <div class="c-logo-block media">
+                <img class="align-self-center mr-2" src="{% static 'img/c-logo.png' %}" title="Blue Logo"
+                  alt="Blue Logo">
+                <p class="media-body"> USA </p>
+              </div>
+            </div>
+
+
+            <div class="country-field">
+              <a href="#" title=""><i class="fas fa-clock"></i> 10:00 am </a>
+              <div class="c-logo-block media">
+                <img class="align-self-center mr-2" src="{% static 'img/c-logo.png' %}" title="Blue Logo"
+                  alt="Blue Logo">
+                <p class="media-body"> USA </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="for-mobile">
+            <div class="country-field">
+              <a href="#" title=""><i class="fas fa-clock"></i> 10:00 am </a>
+              <div class="c-logo-block media">
+                <img class="align-self-center mr-2" src="{% static 'img/c-logo.png' %}" title="Blue Logo"
+                  alt="Blue Logo">
+                <p class="media-body"> USA </p>
+              </div>
+            </div>
+
+            <div class="country-field">
+              <a href="#" title=""><i class="fas fa-clock"></i> 10:00 am </a>
+              <div class="c-logo-block media">
+                <img class="align-self-center mr-2" src="{% static 'img/c-logo.png' %}" title="Blue Logo"
+                  alt="Blue Logo">
+                <p class="media-body"> USA </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Content Row -->
+
+    <div class="row">
+
+      <!-- Area Chart -->
+      <div class="col-xl-12 col-lg-12">
+
+        <div class="card shadow mb-4 mt-5 ScdBlock">
+          <!-- Card Header - Dropdown -->
+          <div class="card-header no-border py-3 d-md-flex d-lg-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary"> Employees List ({{emp_count}})</h6>
+
+            <div class="d-flex align-items-center justify-content-between">
+              <form class="custom-search d-sm-inline-block form-inline ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                <div class="input-group">
+                  <input type="text" class="border-0 small" placeholder="Search..." aria-label="Search"
+                    aria-describedby="basic-addon2" id="search_bar">
+                  <div class="input-group-append">
+                    <i class="fas fa-search fa-sm" id="search_bar_btn"></i>
+                  </div>
+                </div>
+              </form>
+              <a href="{% url 'employee_listing' %}" class="d-sm-inline-block ml-3"><i
+                  class="fas fa-sync-alt"></i></a>
+            </div>
+          </div>
+          <!-- Table  -->
+          <div class="table-responsive emp-list">
+            <table class="table table-bordered" cellspacing="0" width="100%">
+              <tr class="border-bottom-2">
+                <th>Serial no.</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Department</th>
+                <th>Function</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+              {% for i in page_obj %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td><a href="{% url 'employee_profile' %}?employee_id={{i.user_id}}">{{i.name}}</a></td>
+                <td>{{i.city}}</td>
+                <td>{{i.department.departments}}</td>
+                <td>{{i.function}}</td>
+                <td class="green-color">
+                  {% user_status i.user_id as status %}
+                  <i class="fas fa-circle {{status.icon_class}}-color" id="icon_{{i.user_id}}"></i>
+                  <span class="user_online_status" data-attr="{{i.user_id}}"
+                    id="status_{{i.user_id}}">{{status.user_status}}</span>
+                </td>
+                <td>
+                  <div class="gray-circle">
+                    <div class="icons">
+                      <span>
+                        <a href="#" data-toggle="tooltip" data-placement="top" title="Message"> <i
+                            class="far fa-comment-alt"></i></a></span>
+                    </div>
+                    <div class="icons">
+                      <span class="comment_model" data-attr="{{i.user_id}}"
+                        data-comment="{% userComment i.user_id as comment_data %}{{comment_data.comment}}">
+                        <a href="#" data-toggle="tooltip" data-placement="top" title="Comment"><i
+                            class="far fa-comment"></i></a></span>
+                    </div>
+                    <div class="icons">
+                      <span class="task_modal" data-attr="{{i.user_id}}">
+                        <a href="#" data-toggle="tooltip" data-placement="top" title="Task">
+                          <i class="fas fa-tasks"></i>
+                        </a></span>
+                    </div>
+                    <div class="icons">
+                      <span class="email_modal" data-attr="{{i}}">
+                        <a href="#" data-toggle="tooltip" data-placement="top" title="Mail">
+                          <i class="far fa-envelope"></i>
+                        </a></span>
+                    </div>
+                    <div class="icons">
+                      <span class="alert_btn" data-attr="{{i.user_id}}">
+                        <a href="#" data-toggle="tooltip" data-placement="top" title="Alert"><i
+                            class="far fa-bell"></i></a></span>
+                    </div>
+                    <div class="icons">
+                      <span data-toggle="modal" data-target="#schedule-date-time">
+                        <a href="#" data-toggle="tooltip" data-placement="top" title="Calendar"><i
+                            class="far fa-calendar-check"></i></a></span>
+                    </div>
+                    <div class="icons">
+                      <span data-attr="{{i.name}},{{i.user.email}}" class="change_password_icon">
+                        <a href="#" data-toggle="tooltip" data-placement="top" title="Change Password"><i
+                            class="fas fa-unlock-alt"></i></a></span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+        </div>
+
+
+
+        <div class="pagination mb-4">
+          <span class="step-links page-item">    
+            <span class="current d-flex justify-content-left">
+              Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+            {% if page_obj.has_previous %}
+            <div class="d-flex justify-content-center">
+              <a href="?page=1" class="page-link pre mr-2"> first</a>
+              <a href="?page={{ page_obj.previous_page_number }}" class="page-link pre mr-2">&laquo; previous</a>
+            </div>
+            {% endif %}
+            {% if page_obj.has_next %}
+          <div class="d-flex justify-content-center">
+            <a href="?page={{ page_obj.next_page_number }}" class="page-link next ml-2">next &raquo;</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="page-link next ml-2">last </a>
+          </div>
+            {% endif %}
+          </span>
+        </div>
+
+
+
+
+      </div>
+
+
+    </div>
+  </div>
+
+
+</div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->
+
+</div>
+<!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+  <i class="fas fa-angle-up"></i>
+</a>
+
+<div class="adjust-clock task manager-alert modal" id="manager-alert" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Manager's Alert </h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <div class="close-btn">
+            <span aria-hidden="true">×</span>
+          </div>
+        </button>
+      </div>
+      <div class="modal-body p-3 p-md-4 p-lg-4">
+        <div class="row form-row">
+          <div class="col-lg-12">
+            <div class="form-group m-0">
+              <label> Alert message <span class="color-red">*</span> </label>
+              <textarea type="text" class="form-control" onKeyPress="if(this.value.length>300) return false;"
+                placeholder="Enter alert message" id="alert_message" onkeyup="alert_validation()"></textarea>
+              <label id="alert_message_error" style="display: none;color: red"></label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-top-0">
+        <button class="d-sm-inline-block btn w-100 btn-sm btn-primary" type="button" id="send_alert_btn"> OK </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Manager Send Email Modal-->
+<div class="adjust-clock task manager-email modal" id="manager-email" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Send Email: <span
+            class="mr-2 d-lg-inline font-weight-bold text-black1 small word-style">Jacob Watts</span> </h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <div class="close-btn">
+            <span aria-hidden="true">×</span>
+          </div>
+        </button>
+      </div>
+      <div class="modal-body p-3 p-md-4 p-lg-4">
+        <div class="row form-row">
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label>To <span class="color-red">*</span></label>
+              <input type="text" class="form-control" id="to_email" readonly>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label>From <span class="color-red">*</span></label>
+              <input type="text" class="form-control" value="{{request.user.email}}" id="from_email" readonly>
+            </div>
+          </div>
+
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label>Subject <span class="color-red">*</span></label>
+              <input type="text" class="form-control" id="email_subject" required onkeyup="subject_validation()">
+              <label id="email_subject_error" style="display: none;color: red"></label>
+            </div>
+          </div>
+
+          <div class="col-lg-12">
+            <div class="form-group m-0">
+              <label>Description <span class="color-red">*</span></label>
+              <textarea type="text" class="form-control" id="email_description" placeholder="..."
+                onkeyup="description_validation()"></textarea>
+              <label id="email_description_error" style="display: none;color: red"></label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-top-0">
+        <button class="d-sm-inline-block btn btn-sm btn-primary px-5" type="button" id="send_email_btn"> Send </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Manager  Comment Modal-->
+<div class="adjust-clock task manager-email comment modal" id="manager-comment" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Comment to: <span
+            class="mr-2 d-lg-inline font-weight-bold text-black1 small word-style">Jacob Watts</span> </h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <div class="close-btn">
+            <span aria-hidden="true">×</span>
+          </div>
+        </button>
+      </div>
+      <div class="modal-body p-3 p-md-4 p-lg-4">
+        <div class="row form-row">
+          <div class="col-lg-12">
+            <div class="form-group m-0">
+              <label>Comment <span class="color-red">*</span></label>
+              <textarea type="text" class="form-control" placeholder="Add your comment ....." id="user-comment"
+                onkeyup="comment_validation()"></textarea>
+              <label id="comment_error" style="display: none;color: red"></label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-top-0">
+        <button class="d-sm-inline-block btn btn-sm btn-primary px-5" type="button" id="save-comment" data-attr=""> Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!--Manager Task Modal-->
+<div class="adjust-clock alert task modal" id="manager-task" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Task Window </h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <div class="close-btn">
+            <span aria-hidden="true">×</span>
+          </div>
+        </button>
+      </div>
+      <div class="modal-body p-3 p-md-4 p-lg-4">
+        <div class="row form-row">
+          <div class="col-lg-12">
+            <div class="form-group m-0">
+              <label>Today Task <span class="color-red">*</span></label>
+              <textarea type="text" class="form-control" id="today_task" placeholder="Add task..."
+                onkeyup="task_validation()"></textarea>
+              <label id="task_error" style="display: none;color: red"></label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-top-0">
+        <button class="d-sm-inline-block btn w-100 btn-sm btn-success" type="button" id="assign_task"> Assign </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="adjust-clock modal fade" id="add-Schedule" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Adjust Clock</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <div class="close-btn">
+            <span aria-hidden="true">×</span>
+          </div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row form-row">
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label><i class="far fa-clock"></i> Clock 1 <span class="color-red">*</span></label>
+              <select class="form-control" id="timezone1">
+                <option>Please select timezone</option>
+                {% for timezn in timezones %}
+                <option>{{timezn}}</option>
+                {% endfor %}
+              </select>
+              <label id="timezone_1_error" style="display: none;color: red;"></label>
+            </div>
+          </div>
+
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label><i class="far fa-clock"></i> Clock 2 <span class="color-red">*</span></label>
+              <select class="form-control" id="timezone2">
+                <option>Please select timezone</option>
+                {% for timezn in timezones %}
+                <option>{{timezn}}</option>
+                {% endfor %}
+              </select>
+              <label id="timezone_2_error" style="display: none;color: red;"></label>
+            </div>
+          </div>
+
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label><i class="far fa-clock"></i> Clock 3 <span class="color-red">*</span></label>
+              <select class="form-control" id="timezone3">
+                <option>Please select timezone</option>
+                {% for timezn in timezones %}
+                <option>{{timezn}}</option>
+                {% endfor %}
+              </select>
+              <label id="timezone_3_error" style="display: none;color: red;"></label>
+            </div>
+          </div>
+
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label><i class="far fa-clock"></i> Clock 4 <span class="color-red">*</span></label>
+              <select class="form-control" id="timezone4">
+                <option>Please select timezone</option>
+                {% for timezn in timezones %}
+                <option>{{timezn}}</option>
+                {% endfor %}
+              </select>
+              <label id="timezone_4_error" style="display: none;color: red;"></label>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer border-top-0">
+        <button class="d-sm-inline-block btn btn-sm btn-primary sbt-btn shadow-sm" type="button" id="adjust_clock_btn">
+          Submit </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="submit-msg alert modal fade" id="time_zone_message" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <div class="close-btn">
+            <span aria-hidden="true">×</span>
+          </div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row form-row">
+          <div class="col-lg-12 text-center">
+            <p class="m-0">Timezones added successfully</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-top-0">
+        <button class="d-sm-inline-block btn btn-sm btn-primary sbt-btn shadow-sm" type="button" data-dismiss="modal">
+          Ok </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="submit-msg alert modal fade" id="universal_msg_modal" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close close-bntn" type="button" data-dismiss="modal" aria-label="Close">
+          <div class="close-btn">
+            <span aria-hidden="true">×</span>
+          </div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row form-row">
+          <div class="col-lg-12 text-center">
+            <p class="m-0" id="universal_msg"></p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-top-0">
+        <button class="d-sm-inline-block btn btn-sm btn-primary sbt-btn shadow-sm close-bntn" type="button"
+          data-dismiss="modal"> Ok </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end modal -->
+
+
+<!--Start Schedule date-time  Modal-->
+<div class="adjust-clock modal fade" id="schedule-date-time" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Schedule date/time </h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <div class="close-btn">
+            <span aria-hidden="true">×</span>
+          </div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row form-row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label>Start Date: <span class="color-red">*</span></label>
+              <input type="text" class="datepicker form-control" placeholder="MM/DD/YYYY" id="start_date">
+              <!-- <input type="date" class="form-control" placeholder="Department Name" > -->
+              <label id="start_date_error" style="display: none;color: red;"></label>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label>End Date: <span class="color-red">*</span></label>
+              <input type="text" class="datepicker form-control" placeholder="MM/DD/YYYY" id="end_date">
+              <!-- <input type="date" class="form-control" placeholder="Department Name" > -->
+              <label id="end_date_error" style="display: none;color: red;"></label>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label>Start Time: <span class="color-red">*</span></label>
+              <input type="text" class="form-control timepicker" id="start_time" />
+              <!-- <input type="time" class="form-control" placeholder="Department Name" > -->
+              <label id="start_time_error" style="display: none;color: red;"></label>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label>End Time: <span class="color-red">*</span></label>
+              <input type="text" class="form-control timepicker" id="end_time" />
+              <!-- <input type="time" class="form-control" placeholder="Department Name" > -->
+              <label id="end_time_error" style="display: none;color: red;"></label>
+            </div>
+          </div>
+
+          <div class="col-lg-12 text-center"><label id="schedule-date-time-error"
+              style="display: none;color: red;"></label></div>
+
+          <div class="col-lg-12 text-center">
+            <div class="form-group">
+              <button class="d-sm-inline-block btn btn-sm btn-primary sbt-btn shadow-sm" id="add_schedule_btn"
+                type="button">Add</button>
+            </div>
+          </div>
+
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label>Add Schedule List<span class="text-light-gray">(20)</span></label>
+              <div class="employee-group schedule-list">
+                <div class="slip-wrap d-flex py-md-2 py-2 mx-2 mx-md-3">
+                  <div class="name-wrap rounded-circle light-gray mr-md-4 mr-2">01</div>
+                  <h4><strong>Start:</strong>24-04-2020, 08:00am,
+                    <strong>End:</strong>24-04-2020, 08:00am</h4>
+                </div>
+                <div class="slip-wrap d-flex py-md-2 py-2 mx-2 mx-md-3">
+                  <div class="name-wrap rounded-circle light-gray mr-md-4 mr-2">02</div>
+                  <h4><strong>Start:</strong>24-04-2020, 08:00am,
+                    <strong>End:</strong>24-04-2020, 08:00am</h4>
+                </div>
+                <div class="slip-wrap d-flex py-md-2 py-2 mx-2 mx-md-3">
+                  <div class="name-wrap rounded-circle light-gray mr-md-4 mr-2">03</div>
+                  <h4><strong>Start:</strong>24-04-2020, 08:00am,
+                    <strong>End:</strong>24-04-2020, 08:00am</h4>
+                </div>
+                <div class="slip-wrap d-flex py-md-2 py-2 mx-2 mx-md-3">
+                  <div class="name-wrap rounded-circle light-gray mr-md-4 mr-2">04</div>
+                  <h4><strong>Start:</strong>24-04-2020, 08:00am,
+                    <strong>End:</strong>24-04-2020, 08:00am</h4>
+                </div>
+                <div class="slip-wrap d-flex py-md-2 py-2 mx-2 mx-md-3">
+                  <div class="name-wrap rounded-circle light-gray mr-md-4 mr-2">05</div>
+                  <h4><strong>Start:</strong>24-04-2020, 08:00am,
+                    <strong>End:</strong>24-04-2020, 08:00am</h4>
+                </div>
+                <div class="slip-wrap d-flex py-md-2 py-2 mx-2 mx-md-3">
+                  <div class="name-wrap rounded-circle light-gray mr-md-4 mr-2">06</div>
+                  <h4><strong>Start:</strong>24-04-2020, 08:00am,
+                    <strong>End:</strong>24-04-2020, 08:00am</h4>
+                </div>
+                <div class="slip-wrap d-flex py-md-2 py-2 mx-2 mx-md-3">
+                  <div class="name-wrap rounded-circle light-gray mr-md-4 mr-2">07</div>
+                  <h4><strong>Start:</strong>24-04-2020, 08:00am,
+                    <strong>End:</strong>24-04-2020, 08:00am</h4>
+                </div>
+                <div class="slip-wrap d-flex py-md-2 py-2 mx-2 mx-md-3">
+                  <div class="name-wrap rounded-circle light-gray mr-md-4 mr-2">08</div>
+                  <h4><strong>Start:</strong>24-04-2020, 08:00am,
+                    <strong>End:</strong>24-04-2020, 08:00am</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer border-top-0">
+        <!-- <button class="d-sm-inline-block btn btn-sm btn-primary sbt-btn shadow-sm" type="button"
+                    data-dismiss="modal"> Share </button> -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Schedule date-time  Modal-->
+
+
+<!-- change-password modal -->
+<div class="adjust-clock task modal" id="change-password" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Change Password </h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <div class="close-btn">
+            <span aria-hidden="true">×</span>
+          </div>
+        </button>
+      </div>
+      <div class="modal-body p-3 p-md-4 p-lg-4">
+        <div class="row form-row ">
+          <div class="col-lg-12">
+            <div class="form-group form-row field-static">
+              <label>Name : </label>
+              <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" id="staticName" value="Name">
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="form-group form-row field-static">
+              <label>Email :</label>
+              <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="email@example.com">
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label>Password <span class="color-red">*</span> </label>
+              <input type="password" class="form-control" placeholder="Enter Password" required="" id="password"
+                onkeyup="password_validation()">
+              <label id="password_label" style="display: none;color: red;"></label>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="form-group m-0">
+              <label>Confirm Password <span class="color-red">*</span></label>
+              <input type="password" class="form-control" placeholder="Enter Confirm Password" id="confirm_password"
+                onkeyup="confirm_password_validation()" required="">
+              <label id="confirm_password_label" style="display: none;color: red;"></label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-top-0">
+        <button class="d-sm-inline-block btn btn-sm btn-primary sbt-btn shadow-sm" type="button"
+          id="change_password_btn">
+          Submit </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end modal -->
+
+
+
+
+<!-- Bootstrap core JavaScript-->
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- Core plugin JavaScript-->
+<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+<!-- Custom scripts for all pages-->
+<script src="{% static 'js/sb-admin-2.js' %}"></script>
+<script type="text/javascript">
+
+  var loc = window.location
+  var endpoint = ''
+  var wsStart = 'ws://'
+  if (loc.protocol == 'https') {
+    wsStart = 'wss://'
+  }
+
+
+  var endpoint = wsStart + loc.host + "/manager_notify/{{request.user.username}}/"
+  var socket = new WebSocket(endpoint)
+
+  socket.onmessage = function (e) {
+    console.log("message", e)
+    e_data = JSON.parse(e.data)
+    e_data = JSON.parse(e_data["data"])
+    if (e_data["status"] == "i_am_here") {
+      $("#status_" + e_data["staff_id"].toString() + "").html("I am here")
+      $("#icon_" + e_data["staff_id"].toString() + "").removeClass()
+      $("#icon_" + e_data['staff_id'].toString() + "").addClass("fas fa-circle green-color")
+    }
+    else if (e_data["status"] == "in_meeting") {
+      $("#status_" + e_data["staff_id"].toString() + "").html("In Meeting")
+      $("#icon_" + e_data["staff_id"].toString() + "").removeClass()
+      $("#icon_" + e_data['staff_id'].toString() + "").addClass("fas fa-circle grey-color")
+    }
+    else if (e_data["status"] == "lunch_break") {
+      $("#status_" + e_data["staff_id"].toString() + "").html("Lunch Break")
+      $("#icon_" + e_data["staff_id"].toString() + "").removeClass()
+      $("#icon_" + e_data['staff_id'].toString() + "").addClass("fas fa-circle grey-color")
+    }
+    else if (e_data["status"] == "tea_break") {
+      $("#status_" + e_data["staff_id"].toString() + "").html("Tea Break")
+      $("#icon_" + e_data["staff_id"].toString() + "").removeClass()
+      $("#icon_" + e_data['staff_id'].toString() + "").addClass("fas fa-circle grey-color")
+    }
+    else {
+      $("#status_" + e_data["staff_id"].toString() + "").html("Offline")
+      $("#icon_" + e_data["staff_id"].toString() + "").removeClass()
+      $("#icon_" + e_data['staff_id'].toString() + "").addClass("fas fa-circle red-color")
+    }
+
+
+
+  }
+  socket.onopen = function (e) {
+    console.log("open", e)
+  }
+  socket.onerror = function (e) {
+    console.log("error", e)
+  }
+  socket.onclose = function (e) {
+    console.log("onclose", e)
+  }
+
+
+
+  $("#search_bar_btn").click(function () {
+    val = $("#search_bar").val()
+    if (val == "") {
+      $("#search_bar").focus()
+      return false
+    }
+    else {
+      location.href = "{% url 'employee_listing' %}?emp_name=" + val + ""
+    }
+  })
+
+  $(document).on('keypress', '#search_bar', function (e) {
+    var key = e.which;
+    if (key == 13)  // the enter key code
+    {
+      $('#search_bar_btn').click();
+      return false;
+    }
+  });
+
+  function comment_validation() {
+    user_comment = $("#user-comment").val()
+    if (user_comment == "") {
+      $("#comment_error").html("This field is required")
+      $("#comment_error").show()
+      return false
+    }
+    else {
+      $("#comment_error").hide()
+      return true
+    }
+  }
+
+  function task_validation() {
+    today_task = $("#today_task").val()
+    if (today_task == "") {
+      $("#task_error").html("This field is required")
+      $("#task_error").show()
+      return false
+    }
+    else {
+      $("#task_error").hide()
+      return true
+    }
+  }
+
+  function subject_validation() {
+    email_subject = $("#email_subject").val()
+    if (email_subject == "") {
+      $("#email_subject_error").html("This field is required")
+      $("#email_subject_error").show()
+      return false
+    }
+    else {
+      $("#email_subject_error").hide()
+      return true
+    }
+  }
+
+  function description_validation() {
+    email_description = $("#email_description").val()
+    if (email_description == "") {
+      $("#email_description_error").html("This field is required")
+      $("#email_description_error").show()
+      return false
+    }
+    else {
+      $("#email_description_error").hide()
+      return true
+    }
+  }
+
+  function alert_validation() {
+    alert_message = $("#alert_message").val()
+    if (alert_message == "") {
+      $("#alert_message_error").html("This field is required")
+      $("#alert_message_error").show()
+      return false
+    }
+    else {
+      $("#alert_message_error").hide()
+      return true
+    }
+  }
+
+  user_online_status(1);
+
+  function user_online_status(tr) {
+    if ($('.emp-list table tr').eq(tr).length > 0) {
+      var attr_val = $('.emp-list table tr').eq(tr).find('.user_online_status').attr('data-attr');
+      console.log(attr_val);
+
+      $.ajax({
+        type: 'POST',
+        url: "{% url 'check_user_online_status' %}",
+        data: {
+          "user_id": attr_val,
+        },
+        success: function (response) {
+          response = JSON.parse(response)
+          console.log(response)
+          response = response[0]
+          if (response['offline']) {
+            $("#status_" + response['user_id'].toString() + "").html("Offline")
+            $("#icon_" + response['user_id'] + "").removeClass()
+            $("#icon_" + response['user_id'] + "").addClass("fas fa-circle red-color")
+          }
+          if (response['i_am_here']) {
+            $("#status_" + response['user_id'].toString() + "").html("Online")
+            $("#icon_" + response['user_id'] + "").removeClass()
+            $("#icon_" + response['user_id'] + "").addClass("fas fa-circle green-color")
+          }
+          if (response['in_meeting']) {
+            $("#status_" + response['user_id'].toString() + "").html("In Meeting")
+            $("#icon_" + response['user_id'] + "").removeClass()
+            $("#icon_" + response['user_id'] + "").addClass("fas fa-circle grey-color")
+          }
+          if (response['lunch_break']) {
+            $("#status_" + response['user_id'].toString() + "").html("Lunch Break")
+            $("#icon_" + response['user_id'] + "").removeClass()
+            $("#icon_" + response['user_id'] + "").addClass("fas fa-circle grey-color")
+          }
+          if (response['tea_break']) {
+            $("#status_" + response['user_id'].toString() + "").html("Tea Break")
+            $("#icon_" + response['user_id'] + "").removeClass()
+            $("#icon_" + response['user_id'] + "").addClass("fas fa-circle grey-color")
+          }
+        }
+      });
+
+
+      tr++;
+      setTimeout(function () {
+        user_online_status(tr);
+      }, 60000);
+
+    } else {
+      setTimeout(function () {
+        user_online_status(1);
+      }, 60000);
+    }
+  }
+
+  function password_validation() {
+    password = $("#password").val();
+    if (password.length == '' || password.length == null) {
+      $("#password_label").show()
+      $("#password_label").html("This field is required");
+      return false;
+    }
+    else {
+      if (password.length > 20 || password.length < 6) {
+        $("#password_label").show()
+        $("#password_label").html("Password must contain 6 to 20 characters");
+        return false;
+      }
+      else if (password.includes(" ")) {
+        $("#password_label").show()
+        $("#password_label").html("Password must not contain white spaces");
+        return false;
+      }
+      else {
+        $("#password_label").hide()
+        return true;
+      }
+    }
+  };
+
+  function confirm_password_validation() {
+    pass = $("#password").val();
+    password = $("#confirm_password").val();
+
+    if (password.length == '' || password.length == null) {
+      $("#confirm_password_label").show()
+      $("#confirm_password_label").html("This field is required");
+      return false;
+    }
+    else {
+      if (password != pass) {
+        $("#confirm_password_label").show()
+        $("#confirm_password_label").html("Passwords should be same");
+        return false;
+      }
+      else {
+        $("#confirm_password_label").hide()
+        return true;
+      }
+    }
+  };
+
+
+  $(".change_password_icon").click(function () {
+    val = $(this).attr('data-attr')
+    split = val.split(",")
+    email = split[1]
+    name = split[0]
+    $("#staticName").val(name)
+    $("#staticEmail").val(email)
+    $("#password").val("")
+    $("#confirm_password").val("")
+    $("#change-password").modal("show")
+  })
+
+  $("#change_password_btn").click(function () {
+    password_validation()
+    confirm_password_validation()
+    if (password_validation() && confirm_password_validation()) {
+      email = $("#staticEmail").val()
+      $.ajax({
+        type: 'POST',
+        url: "{% url 'change_staff_pass' %}",
+        data: {
+          "email": email,
+          "password": $("#password").val(),
+        },
+        success: function (response) {
+          if (response == 1) {
+            $("#change-password").modal("hide")
+            $("#universal_msg").text("Password changed successfully")
+            $("#universal_msg_modal").modal("show")
+          }
+          else {
+            alert(response)
+          }
+        }
+      });
+    }
+  })
+
+  $("#send_email_btn").click(function () {
+    to_email = $("#to_email").val()
+    from_email = $("#from_email").val()
+    email_subject = $("#email_subject").val()
+    email_description = $("#email_description").val()
+    subject_validation()
+    description_validation()
+    if (subject_validation() && description_validation()) {
+      $("#page_loader").show()
+      $.ajax({
+        type: 'POST',
+        url: "{% url 'today_email' %}",
+        data: {
+          "to_email": to_email,
+          "from_email": from_email,
+          "email_subject": email_subject,
+          "email_description": email_description,
+        },
+        success: function (response) {
+          $("#page_loader").hide()
+          if (response == 1) {
+            $("#manager-email").modal("hide")
+            $("#universal_msg").text("Email sent successfully")
+            $("#universal_msg_modal").modal("show")
+          }
+          else {
+            alert(response)
+          }
+        }
+      });
+    }
+  })
+
+
+  $(".email_modal").click(function () {
+    $("#to_email").val($(this).attr("data-attr"))
+    $("#manager-email").modal("show")
+  })
+
+
+  $(".task_modal").click(function () {
+    user_id = $(this).attr("data-attr")
+    $("#assign_task").attr("data-attr", user_id)
+    $("#manager-task").modal("show")
+  })
+
+
+  $("#assign_task").click(function () {
+    user_id = $(this).attr("data-attr")
+    task = $("#today_task").val()
+    task_validation()
+    if (task_validation()) {
+      $("#page_loader").show()
+      $.ajax({
+        type: 'POST',
+        url: "{% url 'today_task' %}",
+        data: {
+          "user_id": user_id,
+          "task": task
+        },
+        success: function (response) {
+          $("#page_loader").hide()
+          if (response == 1) {
+            $("#manager-task").modal("hide")
+            $("#universal_msg").text("Task Assigned successfully")
+            $("#universal_msg_modal").modal("show")
+          }
+          else {
+            alert(response)
+          }
+        }
+      });
+    }
+  })
+
+  $(".comment_model").click(function () {
+    user_id = $(this).attr("data-attr")
+    comment = $(this).attr("data-comment")
+    name = $(this).attr("data-name")
+    $("#comment_to_name").html(name)
+    $("#user-comment").val(comment)
+    $("#save-comment").attr("data-attr", user_id)
+    $("#manager-comment").modal("show")
+  })
+
+  $("#save-comment").click(function () {
+    user_id = $(this).attr('data-attr')
+    comment = $("#user-comment").val()
+    comment_validation()
+    if (comment_validation()) {
+      $("#page_loader").show()
+      $.ajax({
+        type: 'POST',
+        url: "{% url 'add_comment' %}",
+        data: {
+          "user_id": user_id,
+          "comment": comment
+        },
+        success: function (response) {
+          $("#page_loader").hide()
+          if (response == 1) {
+            $("#manager-comment").modal("hide")
+            $("#universal_msg").text("Comment added successfully")
+            $("#universal_msg_modal").modal("show")
+          }
+          else {
+            alert(response)
+          }
+        }
+      });
+    }
+  })
+
+  $(".alert_btn").click(function () {
+    $("#manager-alert").modal("show")
+    $("#send_alert_btn").attr("data-attr", $(this).attr('data-attr'))
+  })
+
+  $("#send_alert_btn").click(function () {
+    user_id = $(this).attr('data-attr')
+    alert_message = $("#alert_message").val()
+    alert_validation()
+    if (alert_validation()) {
+      $("#page_loader").show()
+      $.ajax({
+        type: 'POST',
+        url: "{% url 'alert_user' %}",
+        data: {
+          "user_id": user_id,
+          "alert_message": alert_message,
+        },
+        success: function (response) {
+          $("#page_loader").hide()
+          if (response == 1) {
+            $("#manager-alert").modal("hide")
+            $("#universal_msg").text("Alert sent successfully")
+            $("#universal_msg_modal").modal("show")
+          }
+          else {
+            alert("Something went wrong")
+          }
+        }
+      });
+    }
+  })
+
+  $(".close-bntn").click(function () {
+    location.href = "{% url 'employee_listing' %}";
+  })
+
+
+</script>
+{% endblock %}

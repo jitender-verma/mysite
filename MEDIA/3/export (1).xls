@@ -1,0 +1,1287 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Worksheet</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col" class="d-none">Date</th>
+                        <th scope="col">Cx. ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Pitch</th>
+
+                        <th scope="col">Agent</th>
+                        <th scope="col">phone</th>
+                        <th scope="col">Final Amount</th>
+                        <th scope="col">Gateways</th>
+                        <th scope="col">Refund</th>
+                        <th scope="col">Chargeback</th>
+                                                
+                                                    <th scope="col">Assign To</th>
+                            <th scope="col">Status</th>
+                                                                            <!--<th></th>-->
+                                                                            <th scope="col">Feedback</th>
+                                            </tr>
+                    </thead>
+                    <tbody>
+                                                                <tr id="row12901">
+                            <td scope="col">1</td>
+                            <td scope="col" class="d-none">
+                                10 Mar,2020
+                            </td>
+                            <td scope="col">
+                                <a class="new_tab_link" href="http://kinfoitsolutions.com/crm_kinfo/customer/view/12901">
+                                    KM12358
+                                </a>
+                            </td>
+                            <!--try this onclick="window.open('#','_blank');window.open(this.href,'_self'); -->
+                            <td scope="col">
+                                <b class="text-primary w-100 d-inline-block">titus Turnley</b>
+                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                    $79.99
+                                </small>
+                            </td>
+                            <td scope="col">
+                                Neelam Mishra                            </td>
+                            <td scope="col">
+                                                                                                            <small class="w-100 d-inline-block">1-478-775-1028</small>
+
+                                                                                                                                                                            
+                                                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                                                    </small>
+                            </td>
+                            <td scope="col">
+                                
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/chargeback/12901" data-toggle="tooltip" data-placement="top" title="Chargeback">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/refund/12901" data-toggle="tooltip" data-placement="top" title="Refund">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            
+                                                        
+                                                            <td scope="col">
+                                    
+                                    <span class="d-none">Hardeep Singh</span>
+                                </td>
+                                <td scope="col">
+                                    <span class="d-none update_status">Open</span>
+                                    
+                                </td>
+                                                        
+                                                            <td scope="col">
+                                                                        <span class="d-none update_feedback">Select feedback</span>
+                                    
+                                </td>
+                                                    </tr>
+                                                                    <tr id="row12900">
+                            <td scope="col">2</td>
+                            <td scope="col" class="d-none">
+                                10 Mar,2020
+                            </td>
+                            <td scope="col">
+                                <a class="new_tab_link" href="http://kinfoitsolutions.com/crm_kinfo/customer/view/12900">
+                                    KM12357
+                                </a>
+                            </td>
+                            <!--try this onclick="window.open('#','_blank');window.open(this.href,'_self'); -->
+                            <td scope="col">
+                                <b class="text-primary w-100 d-inline-block">Sharon Nixon</b>
+                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                    $149.99
+                                </small>
+                            </td>
+                            <td scope="col">
+                                Satnam Singh                            </td>
+                            <td scope="col">
+                                                                                                            <small class="w-100 d-inline-block">1-931-408-4185</small>
+
+                                                                                                                                                                            
+                                                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                                                    </small>
+                            </td>
+                            <td scope="col">
+                                C_Pay
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/chargeback/12900" data-toggle="tooltip" data-placement="top" title="Chargeback">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/refund/12900" data-toggle="tooltip" data-placement="top" title="Refund">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            
+                                                        
+                                                            <td scope="col">
+                                    
+                                    <span class="d-none">Gaurav sharma</span>
+                                </td>
+                                <td scope="col">
+                                    <span class="d-none update_status">Resolved</span>
+                                    
+                                </td>
+                                                        
+                                                            <td scope="col">
+                                                                        <span class="d-none update_feedback">Select feedback</span>
+                                    
+                                </td>
+                                                    </tr>
+                                                                    <tr id="row12899">
+                            <td scope="col">3</td>
+                            <td scope="col" class="d-none">
+                                10 Mar,2020
+                            </td>
+                            <td scope="col">
+                                <a class="new_tab_link" href="http://kinfoitsolutions.com/crm_kinfo/customer/view/12899">
+                                    KM12356
+                                </a>
+                            </td>
+                            <!--try this onclick="window.open('#','_blank');window.open(this.href,'_self'); -->
+                            <td scope="col">
+                                <b class="text-primary w-100 d-inline-block">Richard Rasmussen</b>
+                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                    $199.99
+                                </small>
+                            </td>
+                            <td scope="col">
+                                Pankaj Kumar                            </td>
+                            <td scope="col">
+                                                                                                            <small class="w-100 d-inline-block">1-319-362-3752</small>
+
+                                                                                                                                                                            
+                                                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                                                    </small>
+                            </td>
+                            <td scope="col">
+                                C_Pay
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/chargeback/12899" data-toggle="tooltip" data-placement="top" title="Chargeback">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/refund/12899" data-toggle="tooltip" data-placement="top" title="Refund">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            
+                                                        
+                                                            <td scope="col">
+                                    
+                                    <span class="d-none">Gaurav sharma</span>
+                                </td>
+                                <td scope="col">
+                                    <span class="d-none update_status">Pending</span>
+                                    
+                                </td>
+                                                        
+                                                            <td scope="col">
+                                                                        <span class="d-none update_feedback">Select feedback</span>
+                                    
+                                </td>
+                                                    </tr>
+                                                                    <tr id="row12898">
+                            <td scope="col">4</td>
+                            <td scope="col" class="d-none">
+                                10 Mar,2020
+                            </td>
+                            <td scope="col">
+                                <a class="new_tab_link" href="http://kinfoitsolutions.com/crm_kinfo/customer/view/12898">
+                                    KM12355
+                                </a>
+                            </td>
+                            <!--try this onclick="window.open('#','_blank');window.open(this.href,'_self'); -->
+                            <td scope="col">
+                                <b class="text-primary w-100 d-inline-block">Bobby McCrary</b>
+                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                    $100
+                                </small>
+                            </td>
+                            <td scope="col">
+                                Vikrant Panwar                            </td>
+                            <td scope="col">
+                                                                                                            <small class="w-100 d-inline-block">1-217-415-2510</small>
+
+                                                                                                                                                                            
+                                                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                                                    </small>
+                            </td>
+                            <td scope="col">
+                                Cheque Pending
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/chargeback/12898" data-toggle="tooltip" data-placement="top" title="Chargeback">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/refund/12898" data-toggle="tooltip" data-placement="top" title="Refund">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            
+                                                        
+                                                            <td scope="col">
+                                    
+                                    <span class="d-none">Joginder Badan</span>
+                                </td>
+                                <td scope="col">
+                                    <span class="d-none update_status">Pending</span>
+                                    
+                                </td>
+                                                        
+                                                            <td scope="col">
+                                                                        <span class="d-none update_feedback">Select feedback</span>
+                                    
+                                </td>
+                                                    </tr>
+                                                                    <tr id="row12897">
+                            <td scope="col">5</td>
+                            <td scope="col" class="d-none">
+                                10 Mar,2020
+                            </td>
+                            <td scope="col">
+                                <a class="new_tab_link" href="http://kinfoitsolutions.com/crm_kinfo/customer/view/12897">
+                                    KM12354
+                                </a>
+                            </td>
+                            <!--try this onclick="window.open('#','_blank');window.open(this.href,'_self'); -->
+                            <td scope="col">
+                                <b class="text-primary w-100 d-inline-block">Jason Hall</b>
+                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                    $211.32
+                                </small>
+                            </td>
+                            <td scope="col">
+                                Satnam Singh                            </td>
+                            <td scope="col">
+                                                                                                            <small class="w-100 d-inline-block">1-985-629-1679</small>
+
+                                                                                                                                                                            
+                                                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                                                    </small>
+                            </td>
+                            <td scope="col">
+                                
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/chargeback/12897" data-toggle="tooltip" data-placement="top" title="Chargeback">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/refund/12897" data-toggle="tooltip" data-placement="top" title="Refund">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            
+                                                        
+                                                            <td scope="col">
+                                    
+                                    <span class="d-none">Ravi Minhas</span>
+                                </td>
+                                <td scope="col">
+                                    <span class="d-none update_status">Pending</span>
+                                    
+                                </td>
+                                                        
+                                                            <td scope="col">
+                                                                        <span class="d-none update_feedback">Select feedback</span>
+                                    
+                                </td>
+                                                    </tr>
+                                                                    <tr id="row12896">
+                            <td scope="col">6</td>
+                            <td scope="col" class="d-none">
+                                10 Mar,2020
+                            </td>
+                            <td scope="col">
+                                <a class="new_tab_link" href="http://kinfoitsolutions.com/crm_kinfo/customer/view/12896">
+                                    KS12353
+                                </a>
+                            </td>
+                            <!--try this onclick="window.open('#','_blank');window.open(this.href,'_self'); -->
+                            <td scope="col">
+                                <b class="text-primary w-100 d-inline-block">Gary Foster</b>
+                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                    $279.99
+                                </small>
+                            </td>
+                            <td scope="col">
+                                Karan Kumar                            </td>
+                            <td scope="col">
+                                                                                                            <small class="w-100 d-inline-block">1-909-353-8325</small>
+
+                                                                                                                                                                            
+                                                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                                                    </small>
+                            </td>
+                            <td scope="col">
+                                firstpay
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/chargeback/12896" data-toggle="tooltip" data-placement="top" title="Chargeback">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/refund/12896" data-toggle="tooltip" data-placement="top" title="Refund">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            
+                                                        
+                                                            <td scope="col">
+                                    
+                                    <span class="d-none">Ravi Minhas</span>
+                                </td>
+                                <td scope="col">
+                                    <span class="d-none update_status">Resolved</span>
+                                    
+                                </td>
+                                                        
+                                                            <td scope="col">
+                                                                        <span class="d-none update_feedback">Select feedback</span>
+                                    
+                                </td>
+                                                    </tr>
+                                                                    <tr id="row12895">
+                            <td scope="col">7</td>
+                            <td scope="col" class="d-none">
+                                10 Mar,2020
+                            </td>
+                            <td scope="col">
+                                <a class="new_tab_link" href="http://kinfoitsolutions.com/crm_kinfo/customer/view/12895">
+                                    KM12352
+                                </a>
+                            </td>
+                            <!--try this onclick="window.open('#','_blank');window.open(this.href,'_self'); -->
+                            <td scope="col">
+                                <b class="text-primary w-100 d-inline-block">Cathy sellers</b>
+                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                    $99.99
+                                </small>
+                            </td>
+                            <td scope="col">
+                                Sandeep Kaur                            </td>
+                            <td scope="col">
+                                                                                                            <small class="w-100 d-inline-block">1-248-601-1861</small>
+
+                                                                                                                                                                            
+                                                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                                                    </small>
+                            </td>
+                            <td scope="col">
+                                firstpay
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/chargeback/12895" data-toggle="tooltip" data-placement="top" title="Chargeback">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/refund/12895" data-toggle="tooltip" data-placement="top" title="Refund">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            
+                                                        
+                                                            <td scope="col">
+                                    
+                                    <span class="d-none">Aniket Kumar</span>
+                                </td>
+                                <td scope="col">
+                                    <span class="d-none update_status">Resolved</span>
+                                    
+                                </td>
+                                                        
+                                                            <td scope="col">
+                                                                        <span class="d-none update_feedback">Select feedback</span>
+                                    
+                                </td>
+                                                    </tr>
+                                                                    <tr id="row12894">
+                            <td scope="col">8</td>
+                            <td scope="col" class="d-none">
+                                10 Mar,2020
+                            </td>
+                            <td scope="col">
+                                <a class="new_tab_link" href="http://kinfoitsolutions.com/crm_kinfo/customer/view/12894">
+                                    KM12351
+                                </a>
+                            </td>
+                            <!--try this onclick="window.open('#','_blank');window.open(this.href,'_self'); -->
+                            <td scope="col">
+                                <b class="text-primary w-100 d-inline-block">James koska</b>
+                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                    $99.99
+                                </small>
+                            </td>
+                            <td scope="col">
+                                Rupinder Rupinder                            </td>
+                            <td scope="col">
+                                                                                                            <small class="w-100 d-inline-block">1-612-802-2727</small>
+
+                                                                                                                                                                            
+                                                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                                                    </small>
+                            </td>
+                            <td scope="col">
+                                C_Pay
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/chargeback/12894" data-toggle="tooltip" data-placement="top" title="Chargeback">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/refund/12894" data-toggle="tooltip" data-placement="top" title="Refund">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            
+                                                        
+                                                            <td scope="col">
+                                    
+                                    <span class="d-none">Ravi Minhas</span>
+                                </td>
+                                <td scope="col">
+                                    <span class="d-none update_status">Resolved</span>
+                                    
+                                </td>
+                                                        
+                                                            <td scope="col">
+                                                                        <span class="d-none update_feedback">Select feedback</span>
+                                    
+                                </td>
+                                                    </tr>
+                                                                    <tr id="row12893">
+                            <td scope="col">9</td>
+                            <td scope="col" class="d-none">
+                                10 Mar,2020
+                            </td>
+                            <td scope="col">
+                                <a class="new_tab_link" href="http://kinfoitsolutions.com/crm_kinfo/customer/view/12893">
+                                    KS12350
+                                </a>
+                            </td>
+                            <!--try this onclick="window.open('#','_blank');window.open(this.href,'_self'); -->
+                            <td scope="col">
+                                <b class="text-primary w-100 d-inline-block">jane muston</b>
+                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                    $101.88
+                                </small>
+                            </td>
+                            <td scope="col">
+                                Karan Kumar                            </td>
+                            <td scope="col">
+                                                                                                            <small class="w-100 d-inline-block">1-613-403-2829</small>
+
+                                                                                                                                                                            
+                                                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                                                    </small>
+                            </td>
+                            <td scope="col">
+                                C_Pay
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/chargeback/12893" data-toggle="tooltip" data-placement="top" title="Chargeback">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/refund/12893" data-toggle="tooltip" data-placement="top" title="Refund">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            
+                                                        
+                                                            <td scope="col">
+                                    
+                                    <span class="d-none">Gurvinder Singh</span>
+                                </td>
+                                <td scope="col">
+                                    <span class="d-none update_status">Resolved</span>
+                                    
+                                </td>
+                                                        
+                                                            <td scope="col">
+                                                                        <span class="d-none update_feedback">Select feedback</span>
+                                    
+                                </td>
+                                                    </tr>
+                                                                    <tr id="row12892">
+                            <td scope="col">10</td>
+                            <td scope="col" class="d-none">
+                                10 Mar,2020
+                            </td>
+                            <td scope="col">
+                                <a class="new_tab_link" href="http://kinfoitsolutions.com/crm_kinfo/customer/view/12892">
+                                    KM12349
+                                </a>
+                            </td>
+                            <!--try this onclick="window.open('#','_blank');window.open(this.href,'_self'); -->
+                            <td scope="col">
+                                <b class="text-primary w-100 d-inline-block">Joe Oppedisano</b>
+                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                    $160.43
+                                </small>
+                            </td>
+                            <td scope="col">
+                                Neelam Mishra                            </td>
+                            <td scope="col">
+                                                                                                            <small class="w-100 d-inline-block">1-781-526-1472</small>
+
+                                                                                                                                                                            
+                                                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                                                    </small>
+                            </td>
+                            <td scope="col">
+                                C_Pay
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/chargeback/12892" data-toggle="tooltip" data-placement="top" title="Chargeback">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/refund/12892" data-toggle="tooltip" data-placement="top" title="Refund">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            
+                                                        
+                                                            <td scope="col">
+                                    
+                                    <span class="d-none">Ankur Bhandari</span>
+                                </td>
+                                <td scope="col">
+                                    <span class="d-none update_status">Resolved</span>
+                                    
+                                </td>
+                                                        
+                                                            <td scope="col">
+                                                                        <span class="d-none update_feedback">Select feedback</span>
+                                    
+                                </td>
+                                                    </tr>
+                                                                    <tr id="row12891">
+                            <td scope="col">11</td>
+                            <td scope="col" class="d-none">
+                                10 Mar,2020
+                            </td>
+                            <td scope="col">
+                                <a class="new_tab_link" href="http://kinfoitsolutions.com/crm_kinfo/customer/view/12891">
+                                    KM12348
+                                </a>
+                            </td>
+                            <!--try this onclick="window.open('#','_blank');window.open(this.href,'_self'); -->
+                            <td scope="col">
+                                <b class="text-primary w-100 d-inline-block">Dan Withrow</b>
+                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                    $349.99
+                                </small>
+                            </td>
+                            <td scope="col">
+                                Satnam Singh                            </td>
+                            <td scope="col">
+                                                                                                            <small class="w-100 d-inline-block">1-815-715-0681</small>
+
+                                                                                                                                                                            
+                                                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                                                    </small>
+                            </td>
+                            <td scope="col">
+                                Cheque Pending
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/chargeback/12891" data-toggle="tooltip" data-placement="top" title="Chargeback">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/refund/12891" data-toggle="tooltip" data-placement="top" title="Refund">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            
+                                                        
+                                                            <td scope="col">
+                                    
+                                    <span class="d-none">Gaurav sharma</span>
+                                </td>
+                                <td scope="col">
+                                    <span class="d-none update_status">Pending</span>
+                                    
+                                </td>
+                                                        
+                                                            <td scope="col">
+                                                                        <span class="d-none update_feedback">Select feedback</span>
+                                    
+                                </td>
+                                                    </tr>
+                                                                    <tr id="row12890">
+                            <td scope="col">12</td>
+                            <td scope="col" class="d-none">
+                                10 Mar,2020
+                            </td>
+                            <td scope="col">
+                                <a class="new_tab_link" href="http://kinfoitsolutions.com/crm_kinfo/customer/view/12890">
+                                    KM12347
+                                </a>
+                            </td>
+                            <!--try this onclick="window.open('#','_blank');window.open(this.href,'_self'); -->
+                            <td scope="col">
+                                <b class="text-primary w-100 d-inline-block">William Miller</b>
+                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                    $139.99
+                                </small>
+                            </td>
+                            <td scope="col">
+                                Rupinder Rupinder                            </td>
+                            <td scope="col">
+                                                                                                            <small class="w-100 d-inline-block">1-574-596-8162</small>
+
+                                                                                                                                                                            
+                                                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                                                    </small>
+                            </td>
+                            <td scope="col">
+                                C_Pay
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/chargeback/12890" data-toggle="tooltip" data-placement="top" title="Chargeback">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/refund/12890" data-toggle="tooltip" data-placement="top" title="Refund">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            
+                                                        
+                                                            <td scope="col">
+                                    
+                                    <span class="d-none">Gaurav sharma</span>
+                                </td>
+                                <td scope="col">
+                                    <span class="d-none update_status">Resolved</span>
+                                    
+                                </td>
+                                                        
+                                                            <td scope="col">
+                                                                        <span class="d-none update_feedback">Select feedback</span>
+                                    
+                                </td>
+                                                    </tr>
+                                                                    <tr id="row12889">
+                            <td scope="col">13</td>
+                            <td scope="col" class="d-none">
+                                10 Mar,2020
+                            </td>
+                            <td scope="col">
+                                <a class="new_tab_link" href="http://kinfoitsolutions.com/crm_kinfo/customer/view/12889">
+                                    KM12346
+                                </a>
+                            </td>
+                            <!--try this onclick="window.open('#','_blank');window.open(this.href,'_self'); -->
+                            <td scope="col">
+                                <b class="text-primary w-100 d-inline-block">James White</b>
+                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                    $129.99
+                                </small>
+                            </td>
+                            <td scope="col">
+                                Vikrant Panwar                            </td>
+                            <td scope="col">
+                                                                                                            <small class="w-100 d-inline-block">1-902-457-2647                                                ,</small>
+
+                                                                                                                <small class="w-100 d-inline-block">1-902-414-2657</small>
+                                                                                                                                        
+                                                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                                                    </small>
+                            </td>
+                            <td scope="col">
+                                C_Pay
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/chargeback/12889" data-toggle="tooltip" data-placement="top" title="Chargeback">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/refund/12889" data-toggle="tooltip" data-placement="top" title="Refund">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            
+                                                        
+                                                            <td scope="col">
+                                    
+                                    <span class="d-none">Ravi Minhas</span>
+                                </td>
+                                <td scope="col">
+                                    <span class="d-none update_status">Resolved</span>
+                                    
+                                </td>
+                                                        
+                                                            <td scope="col">
+                                                                        <span class="d-none update_feedback">Select feedback</span>
+                                    
+                                </td>
+                                                    </tr>
+                                                                    <tr id="row12888">
+                            <td scope="col">14</td>
+                            <td scope="col" class="d-none">
+                                10 Mar,2020
+                            </td>
+                            <td scope="col">
+                                <a class="new_tab_link" href="http://kinfoitsolutions.com/crm_kinfo/customer/view/12888">
+                                    KM12345
+                                </a>
+                            </td>
+                            <!--try this onclick="window.open('#','_blank');window.open(this.href,'_self'); -->
+                            <td scope="col">
+                                <b class="text-primary w-100 d-inline-block">Murray Pituley</b>
+                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                    $149.99
+                                </small>
+                            </td>
+                            <td scope="col">
+                                Vikas Yadav                            </td>
+                            <td scope="col">
+                                                                                                            <small class="w-100 d-inline-block">1-306-545-4153</small>
+
+                                                                                                                                                                            
+                                                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                                                    </small>
+                            </td>
+                            <td scope="col">
+                                C_Pay
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/chargeback/12888" data-toggle="tooltip" data-placement="top" title="Chargeback">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/refund/12888" data-toggle="tooltip" data-placement="top" title="Refund">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            
+                                                        
+                                                            <td scope="col">
+                                    
+                                    <span class="d-none">Harvinder Pal Singh</span>
+                                </td>
+                                <td scope="col">
+                                    <span class="d-none update_status">Resolved</span>
+                                    
+                                </td>
+                                                        
+                                                            <td scope="col">
+                                                                        <span class="d-none update_feedback">Select feedback</span>
+                                    
+                                </td>
+                                                    </tr>
+                                                                    <tr id="row12887">
+                            <td scope="col">15</td>
+                            <td scope="col" class="d-none">
+                                10 Mar,2020
+                            </td>
+                            <td scope="col">
+                                <a class="new_tab_link" href="http://kinfoitsolutions.com/crm_kinfo/customer/view/12887">
+                                    KM12344
+                                </a>
+                            </td>
+                            <!--try this onclick="window.open('#','_blank');window.open(this.href,'_self'); -->
+                            <td scope="col">
+                                <b class="text-primary w-100 d-inline-block">Carl Racicot</b>
+                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                    $149.99
+                                </small>
+                            </td>
+                            <td scope="col">
+                                Satnam Singh                            </td>
+                            <td scope="col">
+                                                                                                            <small class="w-100 d-inline-block">1-450-461-2283</small>
+
+                                                                                                                                                                            
+                                                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                                                    </small>
+                            </td>
+                            <td scope="col">
+                                C_Pay
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/chargeback/12887" data-toggle="tooltip" data-placement="top" title="Chargeback">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/refund/12887" data-toggle="tooltip" data-placement="top" title="Refund">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            
+                                                        
+                                                            <td scope="col">
+                                    
+                                    <span class="d-none">Joginder Badan</span>
+                                </td>
+                                <td scope="col">
+                                    <span class="d-none update_status">Resolved</span>
+                                    
+                                </td>
+                                                        
+                                                            <td scope="col">
+                                                                        <span class="d-none update_feedback">Select feedback</span>
+                                    
+                                </td>
+                                                    </tr>
+                                                                    <tr id="row12886">
+                            <td scope="col">16</td>
+                            <td scope="col" class="d-none">
+                                09 Mar,2020
+                            </td>
+                            <td scope="col">
+                                <a class="new_tab_link" href="http://kinfoitsolutions.com/crm_kinfo/customer/view/12886">
+                                    KM12343
+                                </a>
+                            </td>
+                            <!--try this onclick="window.open('#','_blank');window.open(this.href,'_self'); -->
+                            <td scope="col">
+                                <b class="text-primary w-100 d-inline-block">danny pughsley</b>
+                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                    $213.93
+                                </small>
+                            </td>
+                            <td scope="col">
+                                Neelam Mishra                            </td>
+                            <td scope="col">
+                                                                                                            <small class="w-100 d-inline-block">1-912-655-6123</small>
+
+                                                                                                                                                                            
+                                                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                                                    </small>
+                            </td>
+                            <td scope="col">
+                                
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/chargeback/12886" data-toggle="tooltip" data-placement="top" title="Chargeback">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/refund/12886" data-toggle="tooltip" data-placement="top" title="Refund">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            
+                                                        
+                                                            <td scope="col">
+                                    
+                                    <span class="d-none">Hardeep Singh</span>
+                                </td>
+                                <td scope="col">
+                                    <span class="d-none update_status">Pending</span>
+                                    
+                                </td>
+                                                        
+                                                            <td scope="col">
+                                                                        <span class="d-none update_feedback">Select feedback</span>
+                                    
+                                </td>
+                                                    </tr>
+                                                                    <tr id="row12885">
+                            <td scope="col">17</td>
+                            <td scope="col" class="d-none">
+                                09 Mar,2020
+                            </td>
+                            <td scope="col">
+                                <a class="new_tab_link" href="http://kinfoitsolutions.com/crm_kinfo/customer/view/12885">
+                                    KM12342
+                                </a>
+                            </td>
+                            <!--try this onclick="window.open('#','_blank');window.open(this.href,'_self'); -->
+                            <td scope="col">
+                                <b class="text-primary w-100 d-inline-block">Bruce Jenkins</b>
+                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                    $204.87
+                                </small>
+                            </td>
+                            <td scope="col">
+                                Rupinder Rupinder                            </td>
+                            <td scope="col">
+                                                                                                            <small class="w-100 d-inline-block">1-520-273-4798</small>
+
+                                                                                                                                                                            
+                                                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                                                    </small>
+                            </td>
+                            <td scope="col">
+                                C_Pay
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/chargeback/12885" data-toggle="tooltip" data-placement="top" title="Chargeback">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/refund/12885" data-toggle="tooltip" data-placement="top" title="Refund">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            
+                                                        
+                                                            <td scope="col">
+                                    
+                                    <span class="d-none">Gaurav sharma</span>
+                                </td>
+                                <td scope="col">
+                                    <span class="d-none update_status">Resolved</span>
+                                    
+                                </td>
+                                                        
+                                                            <td scope="col">
+                                                                        <span class="d-none update_feedback">Select feedback</span>
+                                    
+                                </td>
+                                                    </tr>
+                                                                    <tr id="row12884">
+                            <td scope="col">18</td>
+                            <td scope="col" class="d-none">
+                                09 Mar,2020
+                            </td>
+                            <td scope="col">
+                                <a class="new_tab_link" href="http://kinfoitsolutions.com/crm_kinfo/customer/view/12884">
+                                    KS12341
+                                </a>
+                            </td>
+                            <!--try this onclick="window.open('#','_blank');window.open(this.href,'_self'); -->
+                            <td scope="col">
+                                <b class="text-primary w-100 d-inline-block">andrea morrison</b>
+                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                    $159.99
+                                </small>
+                            </td>
+                            <td scope="col">
+                                Pavas Vij                            </td>
+                            <td scope="col">
+                                                                                                            <small class="w-100 d-inline-block">1-208-724-5351</small>
+
+                                                                                                                                                                            
+                                                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                                                    </small>
+                            </td>
+                            <td scope="col">
+                                
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/chargeback/12884" data-toggle="tooltip" data-placement="top" title="Chargeback">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/refund/12884" data-toggle="tooltip" data-placement="top" title="Refund">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            
+                                                        
+                                                            <td scope="col">
+                                    
+                                    <span class="d-none">Joginder Badan</span>
+                                </td>
+                                <td scope="col">
+                                    <span class="d-none update_status">Pending</span>
+                                    
+                                </td>
+                                                        
+                                                            <td scope="col">
+                                                                        <span class="d-none update_feedback">Select feedback</span>
+                                    
+                                </td>
+                                                    </tr>
+                                                                    <tr id="row12883">
+                            <td scope="col">19</td>
+                            <td scope="col" class="d-none">
+                                09 Mar,2020
+                            </td>
+                            <td scope="col">
+                                <a class="new_tab_link" href="http://kinfoitsolutions.com/crm_kinfo/customer/view/12883">
+                                    KM12340
+                                </a>
+                            </td>
+                            <!--try this onclick="window.open('#','_blank');window.open(this.href,'_self'); -->
+                            <td scope="col">
+                                <b class="text-primary w-100 d-inline-block">Linda M Deverill</b>
+                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                    $299.99
+                                </small>
+                            </td>
+                            <td scope="col">
+                                Pankaj Kumar                            </td>
+                            <td scope="col">
+                                                                                                            <small class="w-100 d-inline-block">1-250-768-3737</small>
+
+                                                                                                                                                                            
+                                                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                                                    </small>
+                            </td>
+                            <td scope="col">
+                                C_Pay
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/chargeback/12883" data-toggle="tooltip" data-placement="top" title="Chargeback">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">off</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/refund/12883" data-toggle="tooltip" data-placement="top" title="Refund">
+                                        <button type="button" class="btn btn-secondary  btn-sm pull-right mr-1">off
+                                        </button>
+                                    </a>
+                                                                
+                            </td>
+                            
+                                                        
+                                                            <td scope="col">
+                                    
+                                    <span class="d-none">Ankur Bhandari</span>
+                                </td>
+                                <td scope="col">
+                                    <span class="d-none update_status">Resolved</span>
+                                    
+                                </td>
+                                                        
+                                                            <td scope="col">
+                                                                        <span class="d-none update_feedback">Select feedback</span>
+                                    
+                                </td>
+                                                    </tr>
+                                                                    <tr id="row12882">
+                            <td scope="col">20</td>
+                            <td scope="col" class="d-none">
+                                09 Mar,2020
+                            </td>
+                            <td scope="col">
+                                <a class="new_tab_link" href="http://kinfoitsolutions.com/crm_kinfo/customer/view/12882">
+                                    KM12339
+                                </a>
+                            </td>
+                            <!--try this onclick="window.open('#','_blank');window.open(this.href,'_self'); -->
+                            <td scope="col">
+                                <b class="text-primary w-100 d-inline-block">Lee McFerrin</b>
+                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                    $79.99
+                                </small>
+                            </td>
+                            <td scope="col">
+                                Satnam Singh                            </td>
+                            <td scope="col">
+                                                                                                            <small class="w-100 d-inline-block">1-920-928-2408</small>
+
+                                                                                                                                                                            
+                                                            </td>
+                            <td scope="col">
+                                <small class="w-100 d-inline-block">
+                                                                    </small>
+                            </td>
+                            <td scope="col">
+                                C_Pay
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/chargeback/12882" data-toggle="tooltip" data-placement="top" title="Chargeback">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            <td scope="col">
+                                                                <span class="d-none">on</span>
+                                    <a href="http://kinfoitsolutions.com/crm_kinfo/refund/12882" data-toggle="tooltip" data-placement="top" title="Refund">
+                                        <button type="button" class="btn btn-primary btn-sm pull-right mr-1">on</button>
+                                    </a>
+                                                                
+                            </td>
+                            
+                                                        
+                                                            <td scope="col">
+                                    
+                                    <span class="d-none">Joginder Badan</span>
+                                </td>
+                                <td scope="col">
+                                    <span class="d-none update_status">Resolved</span>
+                                    
+                                </td>
+                                                        
+                                                            <td scope="col">
+                                                                        <span class="d-none update_feedback">Select feedback</span>
+                                    
+                                </td>
+                                                    </tr>
+                                                                </tbody>
+                </table></body></html>

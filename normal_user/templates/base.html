@@ -1,0 +1,267 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>{% block title %}{% endblock %}</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+
+  <link
+    href="https://fonts.googleapis.com/css?family=Oswald:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+  <!-- Custom styles for this template-->
+  <link href="{% static 'datetime-picker/wickedpicker.min.css' %}" rel="stylesheet">
+  <link href="  https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+  
+  <link href="{% static 'css/sb-admin-2.css' %}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    {% include 'sidebar.html' %}
+    {% include 'header.html' %}
+
+    {% block content %}
+    {% endblock %}
+    {% include 'timezones_universal_modal.html' %}
+
+
+
+<!-- logout confirmaton popup start -->
+<div class="adjust-clock task add-dce manager-alert modal" id="logout-conformation-popup" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header py-2 flex-row align-items-center justify-content-between">
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <div class="close-btn mt-0">
+            <span aria-hidden="true">×</span>
+          </div>
+        </button>
+      </div>
+      <div class="modal-body p-3 p-md-4 p-lg-4">
+        <div class="row form-row">
+          <div class="col-lg-12 text-center">
+            <p class="m-0" id="universal_msg">Are you sure you want to logout?</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-top-0">
+        <a class="d-sm-inline-block btn btn-sm btn-primary yes-btn sbt-btn shadow-sm mr-2"
+          id="confirm_delete_resource" href="{% url 'logout' %}"> Yes </a>
+        <button class="d-sm-inline-block btn btn-sm btn-primary yes-btn sbt-btn brown-clr shadow-sm" type="button"
+          data-dismiss="modal"> No </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+ <div class="submit-msg alert modal fade" id="time_zone_message" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close close-bntnn" type="button" data-dismiss="modal" aria-label="Close">
+            <div class="close-btn">
+              <span aria-hidden="true">×</span>
+            </div>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row form-row">
+            <div class="col-lg-12 text-center">
+                <p class="m-0" >Timezones added successfully</p>
+            </div>          
+          </div>
+        </div>
+        <div class="modal-footer border-top-0">
+          <button class="d-sm-inline-block btn btn-sm btn-primary sbt-btn shadow-sm close-bntnn" type="button"  data-dismiss="modal"> Ok </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- logout confirmaton popup end -->
+
+
+    <script type="text/javascript" src="https://momentjs.com/downloads/moment.js"></script>
+    <script src="https://momentjs.com/downloads/moment-timezone-with-data.js"></script>
+    <script type="text/javascript">
+
+
+
+      setInterval(function(){ 
+        $.ajax({
+              type: 'POST',
+              url: "{% url 'manager_online' %}",
+              data: {
+                "user_id" : "{{request.user.id}}",
+              },
+              success: function(response){
+              }
+          });
+      }, 180000);
+      
+
+      // $(window).unload(function() {
+      //    $.ajax({
+      //         type: 'POST',
+      //         url: "{% url 'manager_online' %}",
+      //         data: {
+      //           "user_id" : "{{request.user.id}}",
+      //         },
+      //         success: function(response){
+      //         }
+      //     });
+      // }
+
+
+      $(".close-bntnn").click(function () {
+        location.reload()
+      })
+      // console.log(moment.tz("{{user_timezones.timezone2}}").format('MMMM Do YYYY, h:mm:ss a'))
+      function timezone_2()
+    {
+      var london = moment.tz("{{user_timezones.timezone2}}").format('h:mm A');
+
+        $("#timezone_2_2").html(london)
+    }
+    setInterval(timezone_2, 1000);
+
+
+
+    function timezone_3()
+    {
+      var london = moment.tz("{{user_timezones.timezone3}}").format('h:mm A');
+      $("#timezone_3_3").html(london)
+    }
+    setInterval(timezone_3, 1000);
+
+
+    function timezone_4()
+    {
+      var london = moment.tz("{{user_timezones.timezone4}}").format('h:mm A');
+      $("#timezone_4_4").html(london)
+    }
+    setInterval(timezone_4, 1000);
+
+    function timezone_1()
+    {
+        var london = moment.tz("{{user_timezones.timezone1}}").format('h:mm A');
+      $("#timezone_1_1").html(london)
+    }
+    setInterval(timezone_1, 1000);
+
+      function timezone1_validation(){
+      city = $("#timezone1 option:selected").text()
+      if(city == "Please select timezone"){
+        $("#timezone_1_error").html("Please select this field")
+        $("#timezone_1_error").show()
+        return false
+      }
+      else{
+        $("#timezone_1_error").hide()
+        return true
+      }
+    }
+
+
+     function timezone2_validation(){
+      city = $("#timezone2 option:selected").text()
+      if(city == "Please select timezone"){
+        $("#timezone_2_error").html("Please select this field")
+        $("#timezone_2_error").show()
+        return false
+      }
+      else{
+        $("#timezone_2_error").hide()
+        return true
+      }
+    }
+
+     function timezone3_validation(){
+      city = $("#timezone3 option:selected").text()
+      if(city == "Please select timezone"){
+        $("#timezone_3_error").html("Please select this field")
+        $("#timezone_3_error").show()
+        return false
+      }
+      else{
+        $("#timezone_3_error").hide()
+        return true
+      }
+    }
+
+     function timezone4_validation(){
+      city = $("#timezone4 option:selected").text()
+      if(city == "Please select timezone"){
+        $("#timezone_4_error").html("Please select this field")
+        $("#timezone_4_error").show()
+        return false
+      }
+      else{
+        $("#timezone_4_error").hide()
+        return true
+      }
+    }
+
+
+
+
+
+
+
+
+
+
+    $("#adjust_clock_btn").click(function(){
+      timezone1_validation()
+      timezone2_validation()
+      timezone3_validation()
+      timezone4_validation()
+      if(timezone1_validation() && timezone2_validation() && timezone3_validation() && timezone4_validation()){
+        timezone1 = $("#timezone1 option:selected").text()
+        timezone2 = $("#timezone2 option:selected").text()
+        timezone3 = $("#timezone3 option:selected").text()
+        timezone4 = $("#timezone4 option:selected").text()
+        $.ajax({
+              type: 'POST',
+              url: "{% url 'add_clock_timezone' %}",
+              data: {
+                "timezone1" : timezone1,
+                "timezone2" : timezone2,
+                "timezone3" : timezone3,
+                "timezone4" : timezone4,
+              },
+              success: function(response){
+                  if(response == 1){
+                    $("#add-Schedule").modal("hide")
+                    $("#time_zone_message").modal("show")
+                  }
+              }
+          });
+      }
+        
+    })
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,2 @@
+ID,Client ID,Date,Start,End,Venue,Room Category,Room,Track,Name,Speakers,Record,Format,Filename,Notes
+"This is usually the SOK ID, a three digit number 001-999 for example. We use three digit numbers because they show up nicely in the record schedule","This could be used instead of ID (column A) if it's three digits or less, a lot of times it's not so we just use it as a reference",,,,,,,,,,,,,
