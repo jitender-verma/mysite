@@ -1,0 +1,158 @@
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap/fonts/font.css' %}">
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script> -->
+    <!-- <script src='https://www.google.com/recaptcha/api.js'></script> -->
+</head>
+
+<body>
+    <div class="section-background">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="header-wrap d-flex my-5">
+                        <div class="logo-wrap">
+                            <img src="{% static 'images/logo-large-2.jpg' %}" alt="Logo" title="logo">
+                        </div>
+                        <!-- <div class="text-wrap align-items-center d-flex ml-3">
+                            <p>Team Connect</p>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container my-3 extra-lg">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="content-block mt-5">
+                        <img src="{% static 'images/system.svg' %}" alt="">
+                        <h2>A few more clicks to<br> sign in to your account.</h2>
+                        <p>Manage all your employee project and work time </p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="content-block">
+                        <h3 class="text-center">Welcome Back!</h3>
+                        <form class="form-design"  method="POST" id="signup-form" action="{% url 'login' %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <span class="bg-common email"> </span>
+                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder=" Email *" name="{{form.username.name}}" value="{% if user_details %}{{user_details.email}}{% endif %}" required >
+                                {% if form.username.errors %}
+                                    <span id="error_email" class="error_field" style="color: red;">{{ form.username.errors }}</span>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <span class="bg-common password"> </span>
+                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter Password *" name="{{form.password.name}}" value="{% if user_details %}{{user_details.password}}{% endif %}" required>
+                                {% if form.password.errors %}
+                                    <span id="error_password" style="color: red;">{{ form.password.errors }}</span>
+                                {% endif %}
+                            </div>
+                            <div class="form-group recaptcha mb-1">
+                                <div class="captcha-input">
+                                    {{form.captcha}}
+                                    <button class='js-captcha-refresh btn btn-primary ml-2'><i class="fas fa-sync-alt"></i></button>
+                                    {{ form.captcha.errors }}
+                                </div>
+                            </div>
+
+                            {% if form.non_field_errors %}
+                                <div class="form-group m-0" style="color: red;">
+                                    Please check your email and password and try again
+                                </div>
+                            {% endif %}
+
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1" >Remember Me</label>
+                              </div>
+
+                            <button type="submit" class="btn btn-primary custom-btn" id="signinbtn">Sign In</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+
+        $(function () {
+
+            if (localStorage.chkbox && localStorage.chkbox != '') {
+                $('#exampleCheck1').attr('checked', 'checked');
+                $('#exampleInputEmail1').val(localStorage.username);
+                $('#exampleInputPassword1').val(localStorage.pass);
+            } else {
+                $('#exampleCheck1').removeAttr('checked');
+            }
+
+            $('#exampleCheck1').click(function () {
+                if ($('#exampleCheck1').is(':checked')) {
+                    // save username and password
+                    localStorage.username = $('#exampleInputEmail1').val();
+                    localStorage.pass = $('#exampleInputPassword1').val();
+                    localStorage.chkbox = $('#exampleCheck1').val();
+                } else {
+                    localStorage.username = '';
+                    localStorage.pass = '';
+                    localStorage.chkbox = '';
+                }
+            });
+        });
+
+
+         $(document).on('keypress','#id_captcha_1',function (e) {
+               var key = e.which;
+               if(key == 13)  // the enter key code
+               {
+                  $('#signinbtn').click();
+                  return false;
+               }
+            });
+
+          $(document).on('keypress','#exampleInputPassword1',function (e) {
+               var key = e.which;
+               if(key == 13)  // the enter key code
+               {
+                  $('#signinbtn').click();
+                  return false;
+               }
+            });
+
+          $(document).on('keypress','#exampleInputEmail1',function (e) {
+               var key = e.which;
+               if(key == 13)  // the enter key code
+               {
+                  $('#signinbtn').click();
+                  return false;
+               }
+            }); 
+        $('.js-captcha-refresh').click(function () {
+            var $form = $(this).parents('form');
+            var url = location.protocol + "//" + window.location.hostname + ":"
+                + location.port + "/captcha/refresh/";
+
+            // Make the AJAX-call
+            $.getJSON(url, {}, function (json) {
+                $form.find('input[name="captcha_0"]').val(json.key);
+                $form.find('img.captcha').attr('src', json.image_url);
+            });
+
+            return false;
+        });
+    </script>    
+</body>
+</html>

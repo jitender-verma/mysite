@@ -2,6 +2,15 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Q
 
+
+# from datetime import datetime, timedelta
+import datetime
+def default_start_time():
+	now = datetime.datetime.now()
+	start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+	return start.time()
+
+
 class UserType(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	manager = models.BooleanField(default=0)
@@ -70,7 +79,6 @@ class AlertModel(models.Model):
 
 	def __str__(self):
 		return str(self.staff_user_id)
-
 
 
 class TaskModel(models.Model):
@@ -183,6 +191,8 @@ class UserDetails(models.Model):
 	function = models.CharField(max_length=100,blank=True)
 	add_schedule_date_time = models.CharField(max_length=100,blank=True)
 	last_countdown_timer_time = models.DateTimeField(null = True, blank = True)
+	designation = models.TextField(null = True,blank=True)
+	profile_pic = models.FileField(null = True,blank=True, default="/static/img/admin-demo.png")
 
 	def __str__(self):
 		return str(self.user)
@@ -196,6 +206,7 @@ class ManagerDetails(models.Model):
 	full_name = models.CharField(max_length=100,blank=True,null = True)
 	timezone = models.CharField(max_length=100,blank=True,null = True)
 	created = models.DateTimeField(auto_now_add = True, null = True, blank = True)
+	profile_pic = models.FileField(null = True,blank=True, default="/static/img/admin-demo.png")
 
 	def __str__(self):
 		return str(self.manaager)
@@ -214,6 +225,17 @@ class OnlineStatusModel(models.Model):
 		return str(self.user)
 
 
+class ScheduleTime(models.Model):
+	manager = models.ForeignKey(User, on_delete=models.CASCADE)
+	user_id = models.IntegerField(null=True, blank=True)
+	start_date = models.DateField(null = True, blank = True)
+	end_date = models.DateField(null = True, blank = True)
+	start_time = models.TimeField(null = True, blank = True)
+	end_time = models.TimeField(null = True, blank = True)
+
+	def __str__(self):
+		return str(self.start_date)
+
 
 class ScheduleTiming(models.Model):
 	manager = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -224,6 +246,10 @@ class ScheduleTiming(models.Model):
 	end_time = models.TimeField(null = True, blank = True)
 	login_time = models.DateTimeField(null = True, blank = True)
 	logout_time = models.DateTimeField(null = True, blank = True)
+	schedule_time_id = models.ForeignKey(ScheduleTime, on_delete=models.CASCADE)
+	online_time = models.IntegerField(null=True, blank=True, default = 0)
+	offline_time = models.IntegerField(null=True, blank=True, default = 0)
+	break_time = models.IntegerField(null=True, blank=True, default = 0)
 
 	def __str__(self):
 		return str(self.start_date)

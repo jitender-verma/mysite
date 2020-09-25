@@ -70,41 +70,43 @@
             <tr class="border-bottom-2">
               <th>Date</th>
               <th>Task</th>
+              <th>Status</th>
               <th>Delete Task</th>
             </tr>
             {% if page_obj %}
             {% for task in page_obj %}
-            <tr>
-              <td>{{task.created|date:'d/m/Y' }}</td>
-              {% task_split task.id as data_task %}
-              {% if data_task|length > 1 %}
-              <td colspan="2">
-                <table class="inner-table child-table">                  
-                  {% for i in data_task %}
-                    <tr>
-                      <td>{{i.task}}</td>
-                      <td>
-                        <div class="gray-circle">
-                          <div class="icons">
-                            <a class="remove_task_icon" data-attr="{{i.id}}"> <i class="far fa-trash-alt"></i></a>
+              <tr>
+                <td>{{task.created|date:'d/m/Y' }}</td>
+                {% task_split task.id as data_task %}
+                {% if data_task|length > 1 %}
+                <td colspan="2">
+                  <table class="inner-table child-table">                  
+                    {% for i in data_task %}
+                      <tr>
+                        <td>{{i.task}}</td>
+                        <td>
+                          <div class="gray-circle">
+                            <div class="icons">
+                              <a class="remove_task_icon" data-attr="{{i.id}}"> <i class="far fa-trash-alt"></i></a>
+                            </div>
                           </div>
-                        </div>
-                      </td>
-                    </tr>
-                  {% endfor %}
-                </table>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </table>
+                </td>
+                {% else %}
+                <td style="padding: 0.75rem; padding-left: 19px;">{{data_task.0.task}}</td>
+                <td><span id="{{task.id}}_task_status">{% if task.acknowledge %}Acknowledged{% else %}Pending{% endif %}</span></td>
+                <td>
+                <div class="gray-circle">
+                    <div class="icons">
+                        <a class="remove_task_icon" data-attr="{{data_task.0.id}}"> <i class="far fa-trash-alt"></i></a>
+                    </div>
+                </div>
               </td>
-              {% else %}
-              <td style="padding: 0.75rem; padding-left: 19px;">{{data_task.0.task}}</td>
-            <td>
-              <div class="gray-circle">
-                  <div class="icons">
-                      <a class="remove_task_icon" data-attr="{{data_task.0.id}}"> <i class="far fa-trash-alt"></i></a>
-                  </div>
-              </div>
-            </td>
-              {% endif %}              
-            </tr>
+                {% endif %}              
+              </tr>
             {% endfor %}            
             {% else %}
             <tr class="text-center">
@@ -244,5 +246,46 @@
     });
   })
 
+
+  var loc = window.location
+  var endpoint = ''
+  var wsStart = 'ws://'
+  if (loc.protocol == 'https:') {
+    wsStart = 'wss://'
+  }
+
+  a = wsStart + loc.host + "/task_acknowledge/"
+  var exampleSocket = new WebSocket(a);
+  exampleSocket.onmessage = function (e) {
+    console.log("message", e)
+    e_data = JSON.parse(e.data)
+    e_data = JSON.parse(e_data.data)
+    console.log(e_data)
+    // $("#" + e_data["staff_div_id"] + "_status").removeClass()
+    if (e_data["task_id"]) {
+      $("#"+e_data["task_id"]+"_task_status").html("Acknowledged")
+
+    }
+    // if (e_data["status"] == "offline") {
+    //   $("#" + e_data["staff_div_id"] + "_status").addClass("fas fa-circle red-color")
+    // }
+    // else {
+    //   $("#" + e_data["staff_div_id"] + "_status").addClass("fas fa-circle orange-color")
+    // }
+  }
+  exampleSocket.onopen = function (e) {
+    console.log("ow--pen", e)
+  }
+  exampleSocket.onerror = function (e) {
+    console.log("error", e)
+  }
+  exampleSocket.onclose = function (e) {
+    console.log("onclose", e)
+  }
+
+
+  // scroller
+ 
+  $(".ui-autocomplete").scrollBox();
 </script>
 {% endblock %}

@@ -222,7 +222,7 @@
                             <div class="name-wrap rounded-circle light-gray mr-md-4 mr-2">{{forloop.counter}}</div>
                             <h4>
                               <strong>Start:</strong>
-                              {{i.start_date|date:"d/m/Y"}}, {{i.start_time |date:"h:i A"}} <strong>End:</strong>{{i.end_date|date:"d/m/Y"}}, {{i.end_time|date:"h:i A"}}
+                              {{i.start_date|date:"d/m/Y"}}, <strong>End:</strong> {{i.end_date|date:"d/m/Y"}}, <strong>Shift:</strong> {{i.start_time |date:"h:i A"}} to {{i.end_time|date:"h:i A"}}
                             </h4>
                           </div>
                           {% endfor %}{% else %}no_data{% endif %}'>
@@ -310,8 +310,10 @@
             <h6 class="m-0 font-weight-bold text-black1">All Messages</h6>
             <div class="search-block d-sm-inline-block form-inline navbar-search ml-auto">
               <div class="input-group">
-                <input type="text" class="form-control border-0 small" placeholder="Search for..." aria-label="Search"
-                  aria-describedby="basic-addon2" id="search_user">
+                <!-- <input type="text" class="form-control border-0 small" placeholder="Search for..." aria-label="Search"
+                  aria-describedby="basic-addon2" id="search_user" name="asdasd"> -->
+                  <input type="text" class="form-control border-0" placeholder="Search for..." id="search_user" >
+
 
                 <!-- <div class="input-group-append mr-3">
                   <i class="fas fa-search fa-sm"></i>
@@ -790,6 +792,9 @@
 <!-- Custom scripts for all pages-->
 <script src="{% static 'js/sb-admin-2.js' %}"></script>
 
+
+
+
 <script type="text/javascript">
 
   $("#start_time").val("")
@@ -1061,12 +1066,12 @@
       tr++;
       setTimeout(function () {
         user_online_status(tr);
-      }, 20000);
+      }, 60000);
 
     } else {
       setTimeout(function () {
         user_online_status(1);
-      }, 20000);
+      }, 60000);
     }
   }
 
@@ -1150,6 +1155,7 @@
 
   function password_validation() {
     password = $("#password").val();
+    var password_regex = /^(?=\S*[A-Za-z])(?=\S*\d)(?=\S*[^\w\s])\S{8,}$/;
     if (password.length == '' || password.length == null) {
       $("#password_label").show()
       $("#password_label").html("This field is required");
@@ -1166,6 +1172,11 @@
         $("#password_label").html("Password must not contain white spaces");
         return false;
       }
+      else if(password_regex.test(password)==false){
+          $("#password_label").show()
+          $("#password_label").html("Password must be a combination of characters, integers and special characters");
+          return false;
+      } 
       else {
         $("#password_label").hide()
         return true;
@@ -1577,7 +1588,7 @@
     if (e_data['reciever_manager_id']){
       $("#"+e_data['reciever_div_id_div']+"_message_list_msg").html(e_data["chat_message"])
       $("#"+e_data['reciever_div_id_div']+"_message_list_date").html(e_data["date"])
-      $("."+e_data['reciever_div_id_div']+"_chat_box").append('<div class="receiver pt-3"><p>'+e_data["name2"]+' : '+e_data["chat_message"]+'</p><div class="time">'+e_data['date']+'</div></div>')
+      $("."+e_data['reciever_div_id_div']+"_chat_box").append('<div class="receiver pt-3"><p>'+e_data["name"]+' : '+e_data["chat_message"]+'</p><div class="time">'+e_data['date']+'</div></div>')
       div = $("."+e_data['reciever_div_id_div']+"_chat_box");
       div.scrollTop(div.prop('scrollHeight')); 
     }

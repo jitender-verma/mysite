@@ -62,10 +62,10 @@ def user_name(user_email):
 def user_schedules(user__id):
 	try:
 		user_obj = UserDetails.objects.get(user_id = user__id)
-		user_time = pytz.timezone(user_obj.timezone)
-		user_time_ = datetime.now(user_time)
+		# user_time = pytz.timezone(user_obj.timezone)
+		# user_time_ = datetime.now(user_time)
 		# user_time = user_time_.strftime('%Y-%m-%d %I:%M:%S')
-		user_obj = ScheduleTiming.objects.filter(user_id = user__id,  start_date__gte = user_time_)
+		user_obj = ScheduleTime.objects.filter(user_id = user__id)
 		return user_obj
 	except Exception as k:
 		print("---------------",k)
@@ -230,3 +230,43 @@ def manager_chat_info(thread_id, user_id):
 		return context
 	except:
 		return ""
+
+
+
+@register.simple_tag
+def convert_minutes_to_hour(minutes):
+	minutes = minutes
+	if minutes == 0:
+		return "00:00"
+	else:
+		seconds = minutes * 60
+		seconds = seconds % (24 * 3600) 
+		hour = seconds // 3600
+		seconds %= 3600
+		minutes = seconds // 60
+		
+		hour = str(hour)
+		if len(hour) == 1:
+			hour = "0"+hour
+		else:
+			hour = hour
+		minutes = str(minutes)
+		if len(minutes) == 1:
+			minutes = "0"+minutes
+		else:
+			minutes = minutes
+			
+		return hour+":"+str(minutes)
+		# countdown_timer_ = user_count_down_timer - final_minutes
+
+		# countdown_timer = (str(countdown_timer_)).split(".")
+		# minutes = int(countdown_timer[0])
+		# seconds = float("."+countdown_timer[1])
+		# seconds = seconds*60
+		# if len(str(int(seconds))) == 1:
+		# 	sec = "0"+str(int(seconds))
+		# else:
+		# 	sec = str(int(seconds))
+		# countdown_timer = str(minutes)+":"+ sec
+		# print(countdown_timer)
+		# return data

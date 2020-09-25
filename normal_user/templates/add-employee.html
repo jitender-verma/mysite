@@ -126,6 +126,25 @@
                               <label id="department_error" style="display: none;color: red;"></label>
                             </div>
                           </div>
+
+
+                          <div class="col-lg-3">
+                            <div class="form-group">
+                              <label>Date of Company Joining <span class="color-red">*</span></label>
+                              <input type="text" class="datepicker form-control" placeholder="MM/DD/YYYY" id="company_date">
+                              <label id="company_date_error" style="display: none;color: red;"></label>
+                            </div>
+                          </div>
+
+
+                          <div class="col-lg-3">
+                            <div class="form-group">
+                              <label>Date of Department joining <span class="color-red">*</span></label>
+                              <input type="text" class="datepicker form-control" placeholder="MM/DD/YYYY" id="department_date">
+                              <label id="department_date_error" style="display: none;color: red;"></label>
+                            </div>
+                          </div>
+
                           
                           <div class="col-lg-6">
                             <div class="form-group">
@@ -137,6 +156,19 @@
                                 {% endfor %}
                               </select>
                                <label id="function_error" style="display: none;color: red;"></label>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label>Designation <span class="color-red">*</span></label>
+                              <select class="form-control" id="designation" onchange="designation_validation()">
+                                <option>Please select designation</option>
+                                {% for i in designations %}
+                                  <option>{{i.designation}}</option>
+                                {% endfor %}
+                              </select>
+                               <label id="designation_error" style="display: none;color: red;"></label>
                             </div>
                           </div>
                           
@@ -265,12 +297,18 @@
 <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 <!-- Core plugin JavaScript-->
+<script src="{% static 'datetime-picker/wickedpicker.min.js' %}"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
 <!-- Custom scripts for all pages-->
 <script src="{% static 'js/sb-admin-2.js' %}"></script>
 <script type="text/javascript">
   $('#staff_mem_email1').val("")
   $("#password").val("")
+  
+
+  $("#company_date").datepicker({ minDate: 0 })
+  $("#department_date").datepicker({ minDate: 0 })
 
     function accept_number(evt){
       evt = (evt) ? evt : window.event;
@@ -400,6 +438,7 @@
 
     function password_validation(){
         password = $("#password").val();
+        var password_regex = /^(?=\S*[A-Za-z])(?=\S*\d)(?=\S*[^\w\s])\S{8,}$/;
         if(password.length == '' || password.length == null) {
             $("#password_label").show()
             $("#password_label").html("This field is required");
@@ -414,6 +453,11 @@
             else if(!!~password.indexOf(' ')){
                 $("#password_label").show()
                 $("#password_label").html("Password must not contain white spaces");
+                return false;
+            }
+            else if(password_regex.test(password)==false){
+                $("#password_label").show()
+                $("#password_label").html("Password must be a combination of characters, integers and special characters");
                 return false;
             }
             else{
@@ -480,6 +524,21 @@
       }
     }
 
+
+    function designation_validation(){
+      function_ = $("#designation option:selected").text()
+      if(function_ == "Please select designation"){
+        $("#designation_error").html("Please select designation")
+        $("#designation_error").show()
+        return false
+      }
+      else{
+        $("#designation_error").hide()
+        return true
+      }
+    }
+
+
     function timezone_validation(){
       timezone = $("#staff_timezone option:selected").text()
       if(timezone == "Please select Staff's timezone"){
@@ -509,7 +568,7 @@
     function countdown_timer_validation(){
       countdown_timer = $("#countdown_timer option:selected").text()
       if(countdown_timer == "Please select Countdown timer"){
-        $("#countdown_timer_error").html("Please select this field")
+        $("#countdown_timer_error").html("Please select Countdown timer")
         $("#countdown_timer_error").show()
         return false
       }
@@ -532,8 +591,9 @@
         timezone_validation()
         city_validation()
         countdown_timer_validation()
+        designation_validation()
 
-        if (full_name_validation() && email1_validation() && emai2_validation() && phone_number1_validation() && phone_number2_validation() && password_validation() && department_validation() && function_validation() && timezone_validation() && city_validation() && countdown_timer_validation()){
+        if (full_name_validation() && email1_validation() && emai2_validation() && phone_number1_validation() && phone_number2_validation() && password_validation() && department_validation() && function_validation() && timezone_validation() && city_validation() && countdown_timer_validation() && designation_validation()){
             $.ajax({
               type: 'POST',
               url: "{% url 'add_employee' %}",
@@ -552,6 +612,7 @@
                   "countdown_timer": $("#countdown_timer option:selected").val(),
                   "function" : $("#function option:selected").text(),
                   "department" : $("#department option:selected").text(),
+                  "designation" : $("#designation option:selected").text(),
                   "department_id" : $("#department option:selected").val(),
               },
               success: function(response){

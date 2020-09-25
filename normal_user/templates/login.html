@@ -72,6 +72,12 @@
                                 </div>
                             {% endif %}
 
+                            {% if no_authority %}
+                                <div class="form-group m-0" style="color: red;">
+                                    {{no_authority}}
+                                </div>
+                            {% endif %}
+
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
                                 <label class="form-check-label" for="exampleCheck1" >Remember Me</label>

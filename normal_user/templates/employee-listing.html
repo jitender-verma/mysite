@@ -146,7 +146,7 @@
                             <div class="name-wrap rounded-circle light-gray mr-md-4 mr-2">{{forloop.counter}}</div>
                             <h4>
                               <strong>Start:</strong>
-                              {{i.start_date|date:"d/m/Y"}}, {{i.start_time |date:"h:i A"}} <strong>End:</strong>{{i.end_date|date:"d/m/Y"}}, {{i.end_time|date:"h:i A"}}
+                              {{i.start_date|date:"d/m/Y"}}, <strong>End:</strong> {{i.end_date|date:"d/m/Y"}}, <strong>Shift:</strong> {{i.start_time |date:"h:i A"}} to {{i.end_time|date:"h:i A"}}
                             </h4>
                           </div>
                           {% endfor %}{% else %}no_data{% endif %}'>
@@ -1003,6 +1003,7 @@ $(document).on("change","#start_date",function(){
 
   function password_validation() {
     password = $("#password").val();
+    var password_regex = /^(?=\S*[A-Za-z])(?=\S*\d)(?=\S*[^\w\s])\S{8,}$/;
     if (password.length == '' || password.length == null) {
       $("#password_label").show()
       $("#password_label").html("This field is required");
@@ -1019,6 +1020,11 @@ $(document).on("change","#start_date",function(){
         $("#password_label").html("Password must not contain white spaces");
         return false;
       }
+      else if(password_regex.test(password)==false){
+          $("#password_label").show()
+          $("#password_label").html("Password must be a combination of characters, integers and special characters");
+          return false;
+      } 
       else {
         $("#password_label").hide()
         return true;

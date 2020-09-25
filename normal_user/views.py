@@ -28,6 +28,7 @@ from django.db.models.functions import (
 from django.db.models import Q
 import time
 from django.template import loader
+import base64
 
 socket_url = settings.SOCKET_URL
 
@@ -66,45 +67,72 @@ class Login(TemplateView):
 					user_time = user_time_.strftime('%Y-%m-%d %H:%M:%S')
 
 					schedule_obj = ScheduleTiming.objects.filter(user_id = user.id, start_date__year = user_time_.year,  start_date__month  = user_time_.month,  start_date__day  = user_time_.day)
-					if schedule_obj:
-						schedule_obj.update(login_time = user_time)
+					if not schedule_obj:
+						context['form'] = form
+						context["user_details"] = {"email": request.POST['username'], "password" :request.POST['password']}
+						context['no_authority'] = "You are not authorized to start the day at the moment"
+						return render(request=request,template_name = self.template_name,context=context)
 					else:
-						ScheduleTiming.objects.create(user_id = user.id, manager_id = user_obj.manager_id, start_date = user_date, login_time = user_time, end_date = user_date)
+						if schedule_obj[0].logout_time:
+							context['form'] = form
+							context["user_details"] = {"email": request.POST['username'], "password" :request.POST['password']}
+							context['no_authority'] = "Your shift for the day has already ended"
+							return render(request=request,template_name = self.template_name,context=context)
+						if str(user_time_.date()) == str(schedule_obj[0].start_date):
+							user_time_ = parse(user_time_.strftime('%Y-%m-%d %H:%M:%S'))
+							user_time_minutes = (user_time_.hour * 60) + user_time_.minute
+							schedule_obj_minutes = (schedule_obj[0].start_time.hour * 60) + schedule_obj[0].start_time.minute
+							diff = schedule_obj_minutes - user_time_minutes
+							print(diff)
+							if diff > 15:
+								context['form'] = form
+								context["user_details"] = {"email": request.POST['username'], "password" :request.POST['password']}
+								context['no_authority'] = "You are not authorized to start the day at the moment"
+								return render(request=request,template_name = self.template_name,context=context)
+							else:
+								# pass
+								schedule_obj.update(login_time = user_time_)
+								online_status = OnlineStatusModel.objects.get(user_id = user.id)
+								online_status.i_am_here = True
+								online_status.in_meeting = False
+								online_status.lunch_break = False
+								online_status.tea_break = False
+								online_status.offline = False
+								online_status.save()
+								
+								status = "i_am_here"
 
-					online_status = OnlineStatusModel.objects.get(user_id = user.id)
-					online_status.i_am_here = True
-					online_status.in_meeting = False
-					online_status.lunch_break = False
-					online_status.tea_break = False
-					online_status.offline = False
-					online_status.save()
-					
-					status = "i_am_here"
+								manager_id_obj = UserDetails.objects.get(user_id = user.id)
+								manager_obj = User.objects.get(id = manager_id_obj.manager_id)
+								url = socket_url + "/manager_notify/"+str(manager_obj.username)+"/"
+								ws = create_connection(url)
 
-					manager_id_obj = UserDetails.objects.get(user_id = user.id)
-					manager_obj = User.objects.get(id = manager_id_obj.manager_id)
-					url = socket_url + "/manager_notify/"+str(manager_obj.username)+"/"
-					ws = create_connection(url)
-
-					ws.send(json.dumps({'user_id': int(manager_obj.id), "status" : status, "staff_id" : online_status.user.id}))
+								ws.send(json.dumps({'user_id': int(manager_obj.id), "status" : status, "staff_id" : online_status.user.id}))
 
 
-					status_ws = create_connection(socket_url+"/chat_bxx/")
-					staff_div_id = online_status.user.username
-					staff_div_id = staff_div_id.replace(".", "")
-					staff_div_id = staff_div_id.replace("@", "")
-					status_ws.send(json.dumps({"status" : status, "staff_div_id" : staff_div_id}))
+								status_ws = create_connection(socket_url+"/chat_bxx/")
+								staff_div_id = online_status.user.username
+								staff_div_id = staff_div_id.replace(".", "")
+								staff_div_id = staff_div_id.replace("@", "")
+								status_ws.send(json.dumps({"status" : status, "staff_div_id" : staff_div_id}))
 
-					sleep(5)
-					ws.close()
-					status_ws.close()
+								sleep(5)
+								ws.close()
+								status_ws.close()
 
-					invalid_attempts.attempts = 0
-					invalid_attempts.blocked = False
-					invalid_attempts.start_time = None
-					invalid_attempts.save()
-					login(request, user)
-					return HttpResponseRedirect(reverse('landing_page'))
+								invalid_attempts.attempts = 0
+								invalid_attempts.blocked = False
+								invalid_attempts.start_time = None
+								invalid_attempts.save()
+								login(request, user)
+								return HttpResponseRedirect(reverse('landing_page'))
+
+						else:
+							context['form'] = form
+							context["user_details"] = {"email": request.POST['username'], "password" :request.POST['password']}
+							context['no_authority'] = "You are not authorized to start the day at the moment"
+							return render(request=request,template_name = self.template_name,context=context)
+						
 
 			elif manager_obj and user and user.is_superuser == False:
 				invalid_attempts = InvalidAttempts.objects.get(user_id = user.id)
@@ -439,11 +467,6 @@ class StaffWindow(TemplateView):
 		else:
 			if manager_id_obj.last_countdown_timer_time:
 				status_obj = OnlineStatusModel.objects.get(user_id = user_id)
-				print(status_obj.i_am_here)
-				print(status_obj.in_meeting)
-				print(status_obj.lunch_break)
-				print(status_obj.tea_break)
-				print(status_obj.offline)
 				if status_obj.i_am_here:
 					last_time = manager_id_obj.last_countdown_timer_time
 					user_count_down_timer = int(manager_id_obj.count_timer)
@@ -457,7 +480,6 @@ class StaffWindow(TemplateView):
 						time_fifference = user_time_.replace(tzinfo=None) - last_time.replace(tzinfo=None)
 						final_minutes = (time_fifference.total_seconds())/60
 
-					print("in if",final_minutes)
 					if final_minutes > user_count_down_timer:
 						countdown_timer = manager_id_obj.count_timer + ":01"
 						user_time = user_time_.strftime('%Y-%m-%d %H:%M:%S')
@@ -647,9 +669,18 @@ class AcknowledgedTasks(View):
 	def post(self, request):
 		try:
 			user_id = request.POST.get("user_id")
-			context = TaskModel.objects.filter(id = int(user_id)).update(acknowledge = True)			
+			context = TaskModel.objects.filter(id = int(user_id)).update(acknowledge = True)
+			manager_id = TaskModel.objects.filter(id = int(user_id))
+			
+			url = socket_url + "/task_acknowledge/"
+			ws = create_connection(url)
+
+			ws.send(json.dumps({'task_id': user_id, "user_id" : manager_id[0].manager_id}))
+			sleep(5)
+			ws.close()
 			return HttpResponse(1)
-		except:
+		except Exception as j:
+			print(j)
 			return HttpResponse(0)
 
 
@@ -820,11 +851,11 @@ class EndShift(View):
 			user_time_ = datetime.now(user_time)
 			user_time = user_time_.strftime('%Y-%m-%d %I:%M:%S')
 
-			schedule_obj = ScheduleTiming.objects.filter(user_id = request.user.id,  start_date__year = user_time_.year,  start_date__month  = user_time_.month,  start_date__day  = user_time_.day).last()
+			schedule_obj = ScheduleTiming.objects.filter(user_id = request.user.id, login_time__year = user_time_.year,  login_time__month  = user_time_.month,  login_time__day  = user_time_.day).last()
 			if schedule_obj.logout_time:
 				return HttpResponse(5)
 			else:
-				ScheduleTiming.objects.filter(user_id = request.user.id,  start_date__year = user_time_.year,  start_date__month  = user_time_.month,  start_date__day  = user_time_.day).update(logout_time = user_time)
+				ScheduleTiming.objects.filter(user_id = request.user.id, login_time__year = user_time_.year,  login_time__month  = user_time_.month,  login_time__day  = user_time_.day).update(logout_time = user_time)
 				# schedule_obj.save()
 			return HttpResponse(1)
 		except Exception as h:
@@ -835,6 +866,9 @@ class EndShift(View):
 class StaffStatusRuntime(View):
 	def post(self, request):
 		try:
+
+
+
 			staff_id = request.POST.get("user_id")
 			status = request.POST.get("user_status")
 			user_obj = UserDetails.objects.get(user_id = int(staff_id))
@@ -842,7 +876,8 @@ class StaffStatusRuntime(View):
 			user_time_ = datetime.now(user_time)
 			user_time = user_time_.strftime('%Y-%m-%d %H:%M:%S')
 
-			print(status)
+			# print(status)
+			schedule_obj = ScheduleTiming.objects.filter(user_id = int(staff_id), start_date__year = user_time_.year,  start_date__month  = user_time_.month,  start_date__day  = user_time_.day)
 
 			obj = OnlineStatusModel.objects.get(user_id = int(staff_id))
 			if status == "i_am_here":
@@ -851,30 +886,45 @@ class StaffStatusRuntime(View):
 				obj.lunch_break = False
 				obj.tea_break = False
 				obj.offline = False
+				for ob in schedule_obj:
+					ob.online_time = ob.online_time + 1
+					ob.save()
 			elif status == "in_meeting":
 				obj.in_meeting = True
 				obj.i_am_here = False
 				obj.lunch_break = False
 				obj.tea_break = False
 				obj.offline = False
+				for ob in schedule_obj:
+					ob.break_time = ob.break_time + 1
+					ob.save()
 			elif status == "lunch_break":
 				obj.lunch_break = True
 				obj.in_meeting = False
 				obj.i_am_here = False
 				obj.tea_break = False
 				obj.offline = False
+				for ob in schedule_obj:
+					ob.break_time = ob.break_time + 1
+					ob.save()
 			elif status == "tea_break":
 				obj.tea_break = True
 				obj.lunch_break = False
 				obj.in_meeting = False
 				obj.i_am_here = False
 				obj.offline = False
+				for ob in schedule_obj:
+					ob.break_time = ob.break_time + 1
+					ob.save()
 			else:
 				obj.offline = True
 				obj.tea_break = False
 				obj.lunch_break = False
 				obj.in_meeting = False
 				obj.i_am_here = False
+				for ob in schedule_obj:
+					ob.offline_time = ob.offline_time + 1
+					ob.save()
 			obj.time = user_time
 			obj.save()
 
@@ -882,7 +932,8 @@ class StaffStatusRuntime(View):
 			# obj.tea_break = False
 			# obj.offline = False
 			return HttpResponse(1)
-		except:
+		except Exception as i:
+			print(i)
 			return HttpResponse(0)
 
 
@@ -996,6 +1047,7 @@ class AddStaffMember(TemplateView):
 		context["timezones"] = all_timezones
 		context["manager_details"] = ManagerDetails.objects.get(manaager_id = user_id)
 		context["functions"] = Functions.objects.all()
+		context["designations"] = Designation.objects.all()
 		return context
 	
 	def post(self, request):
@@ -1015,6 +1067,7 @@ class AddStaffMember(TemplateView):
 			department = request.POST.get("department")
 			department_id = request.POST.get("department_id")
 			manager_id = request.POST.get("manager_id")
+			designation = request.POST.get("designation")
 			user = User.objects.filter(username = email1)
 			time = timezone.now()
 			if not user:
@@ -1024,7 +1077,7 @@ class AddStaffMember(TemplateView):
 				InvalidAttempts.objects.create(user_id = user.id, blocked = False, attempts = 0)
 				department_obj = Departments.objects.get(id = int(department_id))
 				UserType.objects.create(user_id = user.id, normal_user = True, manager = False)
-				UserDetails.objects.create(user_id = user.id, manager_id = manager_id, email2 = email2, phone_no_1 = phone1, phone_no_2 = phone2, timezone = staff_timezone, city = city, department_id = department_obj.id, count_timer = countdown_timer, it_equipment_specification = dummy_specification_line, comment = comment, function = function, name = name)
+				UserDetails.objects.create(user_id = user.id, manager_id = manager_id, email2 = email2, phone_no_1 = phone1, phone_no_2 = phone2, timezone = staff_timezone, city = city, department_id = department_obj.id, count_timer = countdown_timer, it_equipment_specification = dummy_specification_line, comment = comment, function = function, name = name, designation = designation)
 				AlertModel.objects.create(staff_user_id_id = user.id, manager_id = manager_id)
 				OnlineStatusModel.objects.create(user_id = user.id, i_am_here = False, in_meeting = False, lunch_break = False, tea_break = False, offline = True, time = time.now())
 				return HttpResponse(1)
@@ -1252,7 +1305,14 @@ class StaffEmployeeProfile(TemplateView):
 		sender_obj = ChatMessage.objects.filter(sender_id = employee_id, reciever_id = manager_id)
 		reciever_obj = ChatMessage.objects.filter(sender_id = manager_id, reciever_id = employee_id)
 
-		context["chat_messages"] = (reciever_obj | sender_obj).order_by('created')
+		if reciever_obj or sender_obj:
+			context["thread_id"] = (reciever_obj | sender_obj)[0].thread.id
+		else:
+			chat_thread_obj = ChatThread(sender_id = employee_id, reciever_id = manager_id)
+			chat_thread_obj.save()
+			context["thread_id"] = chat_thread_obj.id
+
+		context["chat_messages"] = (reciever_obj | sender_obj)
 		return context
 
 
@@ -1454,7 +1514,8 @@ class SaveDocument(View):
 
 			return HttpResponse(1)
 
-		except:
+		except Exception as j:
+			print(j)
 			return HttpResponse(0)
 
 
@@ -1564,8 +1625,49 @@ class ManagerProfile(TemplateView):
 		context["departments"] = Departments.objects.all()
 		return context
 
+	def post(self, request):
+		# print(request.POST)
+		try:
+			imgdata = request.POST.get("profile_pic")
+			user_id = request.user.id
+			if imgdata:
+				image_name = str(int(time.time()))
+				image = imgdata.split(";base64,")
+				extens = image[0]
+				ext = extens.split("/")
+				extension = ext[1]
+				base_image = image[1]
+				b_image = base64.b64decode(base_image)
+				filename = image_name + "." + extension
+				
+				image_path_to_saved = settings.PROFILE_IMAGE_PATH + filename
+				file_path = settings.PROFILE_IMAGE_PATH + image_name
 
-class ScheduleTime(View):
+				old_profile = ManagerDetails.objects.get(manaager_id = user_id)
+				if "/static/img/admin-demo.png" in old_profile.profile_pic.name:
+					pass
+				else:
+					try:
+						pic = old_profile.profile_pic.name
+						pic = pic.split("profile_pictures/")
+
+						os.remove(settings.PROFILE_IMAGE_PATH+pic[-1])
+					except:
+						pass
+
+				with open(image_path_to_saved, 'wb') as f:
+					f.write(b_image)
+
+				profile_pic_model_path = image_path_to_saved.split("/static")
+				ManagerDetails.objects.filter(manaager_id = user_id).update(profile_pic = "/static"+profile_pic_model_path[-1])
+				print(profile_pic_model_path)
+			return HttpResponse(1)
+		except Exception as t:
+			print(t)
+			return HttpResponse(0)
+
+
+class SchedulerTime(View):
 	def post(self, request):
 		try:
 			start_date = request.POST.get('start_date')
@@ -1586,31 +1688,42 @@ class ScheduleTime(View):
 				elif end_time < start_time:
 					return HttpResponse("End time should not be less")
 				else:
+
 					schedule_obj = ScheduleTiming.objects.filter(manager_id = user_id, user_id = int(staff_id),  start_date__year = start_date.year,  start_date__month  = start_date.month,  start_date__day  = start_date.day)
 					if schedule_obj:
 							schedule_obj.update(end_date = end_date, start_time = start_time, end_time = end_time)
 					else:
-						ScheduleTiming.objects.create(manager_id = user_id, user_id = int(staff_id), start_date = start_date, end_date = end_date, start_time = start_time, end_time = end_time)
+						schedule_time_obj = ScheduleTime(manager_id = user_id, user_id = int(staff_id), start_date = start_date, end_date = end_date, start_time = start_time, end_time = end_time)
+						schedule_time_obj.save()
+						ScheduleTiming.objects.create(manager_id = user_id, user_id = int(staff_id), start_date = start_date, end_date = end_date, start_time = start_time, end_time = end_time, schedule_time_id = schedule_time_obj)
 					# ScheduleTiming.objects.create(manager_id = user_id, user_id = int(staff_id), start_date = start_date, end_date = end_date, start_time = start_time, end_time = end_time)
 					return HttpResponse(1)
 			elif end_date < start_date:
 				return HttpResponse("End date should not be less")
 			else:
-				if start_time == end_time:
-					return HttpResponse("Time should not be same")
-				elif end_time < start_time:
-					return HttpResponse("End time should not be less")
-				else:
-					delta = end_date - start_date
+				# if start_time == end_time:
+				# 	return HttpResponse("Time should not be same")
+				# elif end_time < start_time:
+				# 	return HttpResponse("End time should not be less")
+				# else:
+				delta = end_date - start_date
 
-					for i in range(delta.days + 1):
-						day = start_date + timedelta(days=i)
-						schedule_obj = ScheduleTiming.objects.filter(manager_id = user_id, user_id = int(staff_id),  start_date__year = day.year,  start_date__month  = day.month,  start_date__day  = day.day)
-						if schedule_obj:
-							schedule_obj.update(end_date = end_date, start_time = start_time, end_time = start_time)
-						else:
-							ScheduleTiming.objects.create(manager_id = user_id, user_id = int(staff_id), start_date = day, end_date = end_date, start_time = start_time, end_time = start_time)
-					return HttpResponse(1)
+				schedule_time_obj = ScheduleTime.objects.filter(manager_id = user_id, user_id = int(staff_id),  start_date__year = start_time.year,  start_date__month  = start_time.month,  start_date__day  = start_time.day, end_date__year = end_time.year,  end_date__month  = end_time.month,  end_date__day  = end_time.day)
+				if schedule_time_obj:
+					schedule_time_obj_obj = schedule_time_obj.last()
+				else:
+					schedule_time_obj = ScheduleTime(manager_id = user_id, user_id = int(staff_id), start_date = start_date, end_date = end_date, start_time = start_time, end_time = end_time)
+					schedule_time_obj.save()
+					schedule_time_obj_obj = schedule_time_obj
+
+				for i in range(delta.days + 1):
+					day = start_date + timedelta(days=i)
+					schedule_obj = ScheduleTiming.objects.filter(manager_id = user_id, user_id = int(staff_id),  start_date__year = day.year,  start_date__month  = day.month,  start_date__day  = day.day)
+					if schedule_obj:
+						schedule_obj.update(end_date = end_date, start_time = start_time, end_time = end_time)
+					else:
+						ScheduleTiming.objects.create(manager_id = user_id, user_id = int(staff_id), start_date = day, end_date = end_date, start_time = start_time, end_time = end_time, schedule_time_id_id = schedule_time_obj_obj.id)
+				return HttpResponse(1)
 		except Exception as f:
 			print("-----------------",f)
 			return HttpResponse(0)
@@ -1806,6 +1919,9 @@ class StaffProfileEdit(TemplateView):
 			context["user_details"]	= False
 		context["departments"] = list(Departments.objects.all().values())
 		context["employee_id"] = employee_id
+		context["cities"] = Cities.objects.all()
+		context["functions"] = Functions.objects.all()
+		context["designations"] = Designation.objects.all()
 		return context
 
 
@@ -1817,15 +1933,59 @@ class StaffProfileEditPost(View):
 			department = request.POST.get("department")
 			department_id = request.POST.get("department_id")
 			user_id = int(request.POST.get("user_id"))
+
+			email2 = request.POST.get("email2")
+			email2 = email2.strip()
+			phone1 = request.POST.get("phone1")
+			phone1 = phone1.strip()
+			phone2 = request.POST.get("phone2")
+			phone2 = phone2.strip()
+			password = request.POST.get("password")
+			dummy_specification_line = request.POST.get("dummy_specification_line")
+			dummy_specification_line = dummy_specification_line.strip()
+			comment = request.POST.get("comment")
+			comment = comment.strip()
+			staff_timezone = request.POST.get("staff_timezone")
+			staff_timezone = staff_timezone.strip()
+			city = request.POST.get("city")
+			city = city.strip()
+			countdown_timer = request.POST.get("countdown_timer")
+			function = request.POST.get("function")
+			function = function.strip()
+			designation = request.POST.get("designation")
+			designation = designation.strip()
 			user_obj = UserDetails.objects.get(user_id = user_id)
 			check_user = User.objects.filter(username = staff_mem_email1)
+			profile_pic = request.POST.get("profile_pic")
 
 
-			if user_obj.user.username == staff_mem_email1:
+
+			if user_obj.user.username:
 				user_obj.name = emergency_contact_person
 				user_obj.save()
 
-				# UserDetails.objects.filter(user_id = user_id).update(department_id = int(department_id))
+				imgdata = request.POST.get('profile_pic')
+				if imgdata:
+					image_name = str(int(time.time()))
+					image = imgdata.split(";base64,")
+					extens = image[0]
+					ext = extens.split("/")
+					extension = ext[1]
+					base_image = image[1]
+					b_image = base64.b64decode(base_image)
+					filename = image_name + "." + extension
+					
+					image_path_to_saved = settings.PROFILE_IMAGE_PATH + filename
+					file_path = settings.PROFILE_IMAGE_PATH + image_name
+
+					with open(image_path_to_saved, 'wb') as f:
+						f.write(b_image)
+
+					profile_pic_model_path = image_path_to_saved.split("/static")
+					# print(profile_pic_model_path)
+					UserDetails.objects.filter(user_id = user_id).update(profile_pic = "/static"+profile_pic_model_path[-1])	
+
+				UserDetails.objects.filter(user_id = user_id).update(phone_no_1 = phone1, department_id = int(department_id), function = function, designation = designation, count_timer = countdown_timer, city = city, timezone = staff_timezone, comment = comment, it_equipment_specification = dummy_specification_line, phone_no_2 = phone2, email2 = email2)
 				
 				user_obj = User.objects.get(id = user_id)
 				user_obj.username = staff_mem_email1
@@ -1834,19 +1994,7 @@ class StaffProfileEditPost(View):
 
 				return HttpResponse(1)
 			else:
-				if check_user:
-					return HttpResponse(5)
-				else:
-					user_obj.name = emergency_contact_person
-					user_obj.save()
-
-					# UserDetails.objects.filter(user_id = user_id).update(department_id = int(department_id))
-					
-					user_obj = User.objects.get(id = user_id)
-					user_obj.username = staff_mem_email1
-					user_obj.email = staff_mem_email1
-					user_obj.save()
-					return HttpResponse(1)
+				return HttpResponse(0)
 		except Exception as y:
 			print(y)
 			return HttpResponse(0)
@@ -1915,7 +2063,7 @@ class GetChat(View):
 			    day=ExtractDay('created'),
 			    hour=ExtractHour('created'),
 			    minute=ExtractMinute('created'),
-			).order_by('created').values('sender_id','reciever_id','message','thread_id','year','month','day','hour','minute','name').filter(thread_id = int(thread_id))
+			).values('sender_id','reciever_id','message','thread_id','year','month','day','hour','minute','name').filter(thread_id = int(thread_id))
 
 
 
@@ -2346,7 +2494,26 @@ def meeting(request, meeting_id):
     return render(request, "meeting.html", {'mid' : meeting_id, 'name': name}) 
 
 
+class ReportingModule(TemplateView):
+	template_name = "reporting_module.html"
 
+	def get_context_data(self, *args, **kwargs):
+		context = {}
+		user_id = kwargs["id"]
+		manager_id = self.request.user.id
+		context["user_timezones"] = ManagerTimezones.objects.get(manager_id = manager_id)
+		context["timezones"] = all_timezones
+		context["manager_details"] = ManagerDetails.objects.get(manaager_id = manager_id)
+		context["user_details"] = UserDetails.objects.get(user_id = int(user_id))
+		
+		schedule_obj = ScheduleTiming.objects.filter(manager_id = manager_id, user_id = int(user_id))
+
+		context["schedule_obj_count"] = schedule_obj.count()
+		paginator = Paginator(schedule_obj, 25)
+		page_number = self.request.GET.get('page')
+		page_obj = paginator.get_page(page_number)
+		context["page_obj"] = page_obj
+		return context
 
 
 
@@ -2535,6 +2702,9 @@ class ManagerProfileEdit(TemplateView):
 		context["manager_details"] = ManagerDetails.objects.get(manaager_id = manager_id)
 		context["departments"] = Departments.objects.all()
 		context["manager_id"] = manager_id
+		context["timezones"] = all_timezones
+		context["manager_timezones"] = ManagerTimezones.objects.get(manager_id = manager_id)
+		context["designations"] = Designation.objects.all()
 		return context
 
 
@@ -2542,39 +2712,63 @@ class ManagerProfileEdit(TemplateView):
 class ManagerProfileEditPost(View):
 	def post(self, request):
 		try:
+			print(request.POST)
 			emergency_contact_person = request.POST.get('emergency_contact_person')
 			email = request.POST.get('email')
+			email = email.strip()
 			department = request.POST.get('department')
+			department = department.strip()
 			department_id = request.POST.get('department_id')
 			manager_id = int(request.POST.get('manager_id'))
-
+			contact_number = request.POST.get('contact_number')
+			contact_number = contact_number.strip()
+			timezone1 = request.POST.get('timezone1')
+			timezone1 = timezone1.strip()
+			timezone2 = request.POST.get('timezone2')
+			timezone2 = timezone2.strip()
+			timezone3 = request.POST.get('timezone3')
+			timezone3 = timezone3.strip()
+			timezone4 = request.POST.get('timezone4')
+			timezone4 = timezone4.strip()
+			department = request.POST.get('department')
+			designation = request.POST.get('designation')
+			designation = designation.strip()
+			manager_timezone = request.POST.get('manager_timezone')
+			manager_timezone = manager_timezone.strip()
+			# return HttpResponse(1)
 			manager_obj = ManagerDetails.objects.get(manaager_id = manager_id)			
 			check_user = User.objects.filter(username = email)
-			if manager_obj.manaager.username == email:
+			if manager_obj.manaager.username:
+
+				ManagerTimezones.objects.filter(manager_id = manager_id).update(timezone1 = timezone1, timezone2 = timezone2, timezone3 = timezone3, timezone4 = timezone4)
+
 				manager_obj.full_name = emergency_contact_person
+				manager_obj.phone = contact_number
+				manager_obj.designation = designation
+				manager_obj.timezone = manager_timezone
 				manager_obj.save()
 
-				# ManagerDetails.objects.filter(manaager_id = manager_id).update(department_id = int(department_id))
+				ManagerDetails.objects.filter(manaager_id = manager_id).update(department_id = int(department_id))
 				
 				user_obj = User.objects.get(id = manager_id)
 				user_obj.username = email
 				user_obj.email = email
 				user_obj.save()
 				return HttpResponse(1)
-			else:
-				if check_user:
-					return HttpResponse(5)
-				else:
-					manager_obj.full_name = emergency_contact_person
-					manager_obj.save()
+			# else:
+			# 	if check_user:
+			# 		return HttpResponse(5)
+			# 	else:
+			# 		manager_obj.full_name = emergency_contact_person
+			# 		manager_obj.save()
 
-					# ManagerDetails.objects.filter(manaager_id = manager_id).update(department_id = int(department_id))
+			# 		ManagerDetails.objects.filter(manaager_id = manager_id).update(department_id = int(department_id))
 					
-					user_obj = User.objects.get(id = manager_id)
-					user_obj.username = email
-					user_obj.email = email
-					user_obj.save()
-					return HttpResponse(1)
+			# 		user_obj = User.objects.get(id = manager_id)
+			# 		user_obj.username = email
+			# 		user_obj.email = email
+			# 		user_obj.save()
+			# 		return HttpResponse(1)
 		except Exception as h:
 			print(h)
 			return HttpResponse(0)

@@ -518,7 +518,22 @@
     <!-- Custom scripts for all pages-->
     <script src="{% static 'js/sb-admin-2.js' %}"></script>
     <script type="text/javascript" src="https://momentjs.com/downloads/moment.js"></script>
-    <script src="http://momentjs.com/downloads/moment-timezone-with-data.js"></script>
+    <script src="https://momentjs.com/downloads/moment-timezone-with-data.js"></script>
+    <script type="text/javascript">
+        setInterval(function(){ 
+            user_status = $("#user_status option:selected").val()
+            $.ajax({
+                  type: 'POST',
+                  url: "{% url 'staff_online' %}",
+                  data: {
+                    "user_status" : user_status,
+                    "user_id" : "{{request.user.id}}",
+                  },
+                  success: function(response){
+                  }
+              });
+          }, 60000);
+    </script>
 
     {% if not shift_ended %}
         <script type="text/javascript">
@@ -551,7 +566,8 @@
                 clearInterval(off_interval)
                 window.off_interval = setTimeout(function(){
                     change_user_status1("offline")
-                    $("#user_status option[value='offline']").attr('selected', 'selected');
+                    $("#user_status option[value='offline']").attr('selected', false);
+                    $("#user_status option[value='offline']").attr('selected', true);
                     $(".today_status").html('Offline <i class="fas fa-circle red-color"></i>')
                 }, 10000);
             }               
@@ -723,7 +739,7 @@
                 },
                 success: function (response) {
                     $("#page_loader").hide()
-                    html = '<tr class="border-bottom-2"><th>S.No.</th><th>Task</th><th>Date</th><th> <a href="#" class="ack-icon" data-toggle="tooltip" data-placement="top" title="Acknowledge"> <i class="fa fa-check-circle"aria-hidden="true"></i></a></th></tr>'
+                    html = '<tr class="border-bottom-2"><th>S.No.</th><th>Task</th><th>Date</th><th>Status</tr>'
                     try {
                         response = JSON.parse(response)
                         if(response.length == 0){
@@ -939,19 +955,7 @@
         }
 
 
-        setInterval(function(){ 
-            user_status = $("#user_status option:selected").val()
-            $.ajax({
-                  type: 'POST',
-                  url: "{% url 'staff_online' %}",
-                  data: {
-                    "user_status" : user_status,
-                    "user_id" : "{{request.user.id}}",
-                  },
-                  success: function(response){
-                  }
-              });
-          }, 100000);
+        
         
         // 100000
 

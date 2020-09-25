@@ -659,6 +659,7 @@
 
     function password_validation(){
         password=$("#password").val();
+        var password_regex = /^(?=\S*[A-Za-z])(?=\S*\d)(?=\S*[^\w\s])\S{8,}$/;
         if(password.length == '' || password.length == null) {
             $("#password_label").show()
             $("#password_label").html("This field is required");
@@ -673,6 +674,11 @@
             else if(!!~password.indexOf(' ')){
                 $("#password_label").show()
                 $("#password_label").html("Password must not contain white spaces");
+                return false;
+            }
+            else if(password_regex.test(password)==false){
+                $("#password_label").show()
+                $("#password_label").html("Password must be a combination of characters, integers and special characters");
                 return false;
             }
             else{

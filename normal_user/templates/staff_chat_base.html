@@ -207,7 +207,7 @@
     <script src="https://momentjs.com/downloads/moment-timezone-with-data.js"></script>
     {% if request.path == "/" %}
         <script type="text/javascript">
-          var i =  window.open("https://teamconnecthub.net/staff_user_window", "StaffTimer", "width=400,height=350")
+          var i =  window.open("http://192.168.25.33:9001/staff_user_window", "StaffTimer", "width=400,height=350")
         </script>
     {% else %}
       <script type="text/javascript">
@@ -572,7 +572,7 @@
         var socket = new WebSocket(endpoint)
 
         socket.onmessage = function (e) {
-            console.log("message", e)
+            console.log("messsssage", e)
             e_data = JSON.parse(e.data)
             e_data = JSON.parse(e_data.data)
 
@@ -629,7 +629,9 @@
                     user_div_id = $("#hidden_details_id").attr('user_div_id')
                     thread_id = $("#hidden_details_id").attr('thread_id')
                     reciever_name = $("#hidden_details_id").attr('reciever_name')
+                    console.log(thread_id)
                     name = $("#hidden_details_id").attr('name')
+                    console.log(user_div_id)
                     reciever_email = $("#hidden_details_id").attr('reciever_email')
                     reciever_manager_id = $("#hidden_details_id").attr('reciever_manager_id')
                     manager_id = $("#hidden_details_id").attr('manager_id')
@@ -654,7 +656,8 @@
 
                     data = {"user_id" : reciever_id, "chat_message" : $("#chat_message").val(), 'date' : sender_time, "backend_time" :sender_time_backend , 'receiver_date' : receiver_time, "receiver_backend_time" :receiver_time_backend, "user_div_message_id" : ""+ user_div_id +"_message_list", "user_div_thread" : user_div_id, "name": name, "Online_status" : $("#"+ user_div_id +"_status").attr("class"), "reciever_email" : reciever_email, "reciever_div_id" : "."+ user_div_id +"_message-box-div", "reciever_div_id_div": user_div_id, "thread_id":thread_id}
 
-
+                    // console.log(data)
+                    // console.log(socket)
                     socket.send(JSON.stringify(data))
 
                     if (manager_id == reciever_manager_id){
@@ -687,6 +690,7 @@
                     
                     $("#chat_message").val("")
                     $("#chat_message").focus()
+                    // alert("asdasd")
                 }
             })
         }
@@ -739,71 +743,73 @@
     </script>
 
     <script type="text/javascript">
-              // open a socket connection
-        // var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-        // const chatSocket = new WebSocket(
-        //     ws_scheme
-        //     + '://'
-        //     + window.location.host
-        //     + '/ws/startCall/'
-        // );
-        var loc = window.location
-        var endpoint = ''
-        var wsStart = 'ws://'
-        if (loc.protocol == 'https:') {
-            wsStart = 'wss://'
+      // open a socket connection
+      // var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+      // const chatSocket = new WebSocket(
+      //     ws_scheme
+      //     + '://'
+      //     + window.location.host
+      //     + '/ws/startCall/'
+      // );
+      var loc = window.location
+      var endpoint = ''
+      var wsStart = 'ws://'
+      if (loc.protocol == 'https:') {
+      wsStart = 'wss://'
+      }
+      var endpoint = wsStart + loc.host + '/ws/startCall/'
+      console.log(endpoint)
+      var chatSocket = new WebSocket(endpoint)
+
+      // listen to data on socket communication
+      chatSocket.onmessage = function(e) {
+
+        var data = JSON.parse(e.data);
+        // console.log(data)
+        var meeting_id = data['meeting_id'];
+
+
+        if(meeting_id){
+          //https://meet.mgdsw.info:13043/${meeting_id}/
+          var user_id = "{{request.user.id}}" // username of current logged in user
+          if(user_id == (meeting_id).toString()){ 
+            var body = `<p> You are invited to join the video call. Please join here </p><a class="d-sm-inline-block btn btn-sm btn-primary sbt-btn shadow-sm close_popup mt-4" href='/meeting/${meeting_id}/' target='_blank'>JOIN NOW</a>`
+
+            // var body = `You are invited to join the video call. Please join here - <a class="close_popup" href='/meeting/${meeting_id}/' target='_blank'>JOIN NOW</a>`;
+            $('#myModal').find('.modal-body').html(body);
+
+            $("#myModal").modal()
+          }
         }
-        var endpoint = wsStart + loc.host + '/ws/startCall/'
-        console.log(endpoint)
-        var chatSocket = new WebSocket(endpoint)
 
-        // listen to data on socket communication
-        chatSocket.onmessage = function(e) {
+          
 
-            var data = JSON.parse(e.data);
-            // console.log(data)
-            var meeting_id = data['meeting_id'];
+      };
+
+      $(document).on("click", ".close_popup", function(){
+        $("#myModal").modal("hide")
+      }) 
+      // on manager role, clicking on call button will pass the username on socket and send notification to that user for a call accept.
+      // $(".meeting_id").click(function(){
+      //     userToCall= $(this).attr('attr');
+      //     start(userToCall);
+      // });
+
+      // // start socket connection
+      // function start(name) {
+      //     chatSocket.send(JSON.stringify({
+      //         'meeting_id': name,
+      //     }));
+      // }
+
+      chatSocket.onopen = function open() {
+        console.log('WebSockets connection created.');
+      };
 
 
-
-
-            //https://meet.mgdsw.info:13043/${meeting_id}/
-            var user_id = "{{request.user.id}}" // username of current logged in user
-            if(user_id == (meeting_id).toString()){ // the call invitation will be shown to user if user role is employee and meeting id created through socket is same as current logged in username
-              var body = `<p> You are invited to join the video call. Please join here </p><a class="d-sm-inline-block btn btn-sm btn-primary sbt-btn shadow-sm close_popup mt-4" href='/meeting/${meeting_id}/' target='_blank'>JOIN NOW</a>`
-
-                // var body = `You are invited to join the video call. Please join here - <a class="close_popup" href='/meeting/${meeting_id}/' target='_blank'>JOIN NOW</a>`;
-                $('#myModal').find('.modal-body').html(body);
-
-                $("#myModal").modal()
-            }
-            
-        };
-
-        $(document).on("click", ".close_popup", function(){
-          $("#myModal").modal("hide")
-        }) 
-        // on manager role, clicking on call button will pass the username on socket and send notification to that user for a call accept.
-        // $(".meeting_id").click(function(){
-        //     userToCall= $(this).attr('attr');
-        //     start(userToCall);
-        // });
-
-        // // start socket connection
-        // function start(name) {
-        //     chatSocket.send(JSON.stringify({
-        //         'meeting_id': name,
-        //     }));
-        // }
-
-        chatSocket.onopen = function open() {
-          console.log('WebSockets connection created.');
-        };
-        
-
-        chatSocket.onclose = function(e) {
-            console.error('Chat socket closed unexpectedly');
-        };
+      chatSocket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+      };
 
         
 

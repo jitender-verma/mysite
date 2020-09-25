@@ -16,6 +16,8 @@
             Record </a>
           <a href="/task_list/{{user_details.user.id}}"
             class="d-sm-inline-block btn btn-sm btn-primary table-btn shadow-sm add_city_popup"> Task List </a>
+          <a href="/reporting_module/{{user_details.user.id}}"
+            class="d-sm-inline-block btn btn-sm btn-primary table-btn shadow-sm add_city_popup"> Reporting Module </a>
 
         </div>
       </div>
@@ -265,7 +267,7 @@
                   {% endfor %}
                   {% else %}
 
-                  <div class="mt-show d-flex flex-column justify-content-center">
+                  <div class="mt-show d-flex flex-column justify-content-center justify_content_center_start_conv">
                     <div class="not-chat text-center">
                       <i class="fab fa-rocketchat"></i>
                     </div>
@@ -483,12 +485,12 @@
     e_data = JSON.parse(e.data)
     e_data = JSON.parse(e_data.data)
     console.log(e_data)
-    if (e_data["chat_message"]) {
+    if (e_data["thread_id"]) {
 
 
       console.log(e_data["reciever_div_id"])
 
-      $(e_data["reciever_div_id"]).append('<div class="receiver pt-3"><p>' + e_data["chat_message"] + '</p><div class="time">' + e_data["date"] + '</div></div>')
+      $(e_data["reciever_div_id"]).append('<div class="receiver pt-3"><p>' + e_data["chat_message"] + '</p><div class="time">' + e_data["receiver_date"] + '</div></div>')
       div = $(e_data["reciever_div_id"])
       div.scrollTop(div.prop('scrollHeight'));
     }
@@ -501,6 +503,7 @@
         $("#chat_message").focus()
       }
       else {
+        $(".justify_content_center_start_conv").remove()
         var dt = new Date();
         var month = dt.getMonth() + 1;
         var day = dt.getDate();
@@ -522,14 +525,29 @@
         $(".{{reciever_div_id}}_message-box-div").append('<div class="d-flex"><div class="sender pt-3  ml-auto"><p>' + $("#chat_message").val() + '</p><div class="time">' + output + ' , ' + time + '</div></div></div>')
 
 
+        var sender_time = moment.tz("{{manager_details.timezone}}").format('DD/MM/YYYY , hh:mm A');
+        var sender_time_backend = moment.tz("{{manager_details.timezone}}").format('DD/MM/YYYY hh:mm:ss A');
+
+        var receiver_time = moment.tz("{{user_details.timezone}}").format('DD/MM/YYYY , hh:mm A');
+        var receiver_time_backend = moment.tz("{{user_details.timezone}}").format('DD/MM/YYYY hh:mm:ss A');
+
 
         div = $(".{{reciever_div_id}}_message-box-div");
         div.scrollTop(div.prop('scrollHeight'));
 
-        data = { "user_id": "{{reciever_id}}", "chat_message": $("#chat_message").val(), 'date': output + ' , ' + time, "backend_time": output + " , " + backend_time, "user_div_message_id": "{{user_div_id}}_message_list", "user_div_thread": "{{user_div_id}}", "name": "{{reciever_name}}", "Online_status": $("#{{user_div_id}}_status").attr("class"), "reciever_email": "{{request.user.username}}", "reciever_div_id": ".{{user_div_id}}_message-box-div", "reciever_div_id_div": "{{user_div_id}}" }
+        // data = { "user_id": "{{reciever_id}}", "chat_message": $("#chat_message").val(), 'date': output + ' , ' + time, "backend_time": output + " , " + backend_time, "user_div_message_id": "{{user_div_id}}_message_list", "user_div_thread": "{{user_div_id}}", "name": "{{reciever_name}}", "Online_status": $("#{{user_div_id}}_status").attr("class"), "reciever_email": "{{request.user.username}}", "reciever_div_id": ".{{user_div_id}}_message-box-div", "reciever_div_id_div": "{{user_div_id}}" }
+
+
+        data = {"user_id" : "{{reciever_id}}", "chat_message" : $("#chat_message").val(), 'date' : sender_time, "backend_time" :sender_time_backend , 'receiver_date' : receiver_time, "receiver_backend_time" :receiver_time_backend, "user_div_message_id" : "{{user_div_id}}_message_list", "user_div_thread" : "{{user_div_id}}", "name": "{{manager_details.full_name}}", "Online_status" : $("#{{user_div_id}}_status").attr("class"), "reciever_email" : "{{request.user.username}}", "reciever_div_id" : ".{{user_div_id}}_message-box-div", "reciever_div_id_div": "{{user_div_id}}"}
 
 
         socket.send(JSON.stringify(data))
+
+
+      manager_data = {"manager_id" : "{{request.user.id}}", "chat_message" : $("#chat_message").val(), 'date' : sender_time, "backend_time" :sender_time_backend , 'receiver_date' : receiver_time, "receiver_backend_time" :receiver_time_backend, "user_div_message_id" : "{{user_div_id}}_message_list", "user_div_thread" : "{{user_div_id}}", "name": "{{manager_details.full_name}}", "Online_status" : $("#{{user_div_id}}_status").attr("class"), "reciever_email" : "{{request.user.username}}", "reciever_div_id" : ".{{user_div_id}}_message-box-div", "reciever_div_id_div": "{{thread_id}}", "name2" : "{{user_details.name}}"}
+
+      socket.send(JSON.stringify(manager_data))
+
         $("#chat_message").val("")
         $("#chat_message").focus()
       }

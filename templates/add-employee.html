@@ -1,0 +1,579 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Add employee{% endblock %}
+{% block content %}
+        <div class="outer-dashboard py-md-4 py-lg-4 py-3">
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+            <div class="page-wrap page-add-employee">
+              <div class="row">
+  
+                <!-- Area Chart -->
+                <div class="col-xl-12 col-lg-12">
+  
+                  <!-- Page Heading -->
+                  <div class="d-sm-flex align-items-center justify-content-between mb-2">
+                    <h1 class="h3 mb-0 text-gray-800">Add Employee</h1>
+                  </div>
+                  <div class="card shadow py-3 px-4">
+                    <div class=" form-wrap-section">
+                      <div class="form-wrap">
+                        <div class="row form-row">
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label>Name <span class="color-red">*</span></label>
+                              <input type="text" class="form-control" placeholder="Enter Name" id="staff_mem_name" onkeyup="full_name_validation()" required>
+                              <span id="emergency_contact_person_error" style="display: none;color: red;"></span>
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label>Email 1 <span class="color-red">*</span></label>
+                              <input type="email" class="form-control" placeholder="Enter Email 1" id="staff_mem_email1" onkeyup="email1_validation()" required>
+                              <span id="error1_email" style="display: none;color: red;"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row form-row">                      
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label>Email 2</label>
+                              <input type="email" class="form-control" placeholder="Enter Email 2" id="staff_mem_email2" onkeyup="emai2_validation()" required>
+                              <span id="error2_email" style="display: none;color: red;"></span>
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label>Phone 1 <span class="color-red">*</span></label>
+                              <input type="text" class="form-control" placeholder="Enter Phone 1" id="staff_mem_phone1" onkeyup="phone_number1_validation()" onkeypress="return accept_number(event)">
+                              <span id="contact_number1_label" style="display: none;color: red;"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row form-row">                          
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label>Phone 2</label>
+                              <input type="number" class="form-control" placeholder="Enter Phone 2" id="staff_mem_phone2" onkeyup="phone_number2_validation()" onkeypress="return accept_number(event)">
+                              <span id="contact_number2_label" style="display: none;color: red;"></span>
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label>Password <span class="color-red">*</span></label>
+                              <input type="password" class="form-control" placeholder="Enter Password" id="password" onkeyup="password_validation()" required>
+                              <span id="password_label" style="display: none;color: red;"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row form-row">
+                          <div class="col-lg-3">
+                            <div class="form-group">
+                              <label>Time Zone <span class="color-red">*</span></label>
+                              <select class="form-control" id="staff_timezone"  onchange="timezone_validation()">
+                                <option>Please select Staff's timezone</option>
+                                {% for timezn in timezones %}
+                                  <option>{{timezn}}</option>
+                                {% endfor %}
+                              </select>
+                               <label id="timezone_error" style="display: none;color: red;"></label>
+                            </div>
+                          </div>
+                          <div class="col-lg-3">
+                            <div class="form-group">
+                              <label>City <span class="color-red">*</span></label>
+                              <select class="form-control" id="city" onchange="city_validation()">
+                                <option>Please select city</option>
+                                {% for i in cities %}
+                                  <option>{{i.cities}}</option>
+                                {% endfor %}
+                              </select>
+                               <label id="city_error" style="display: none;color: red;"></label>
+                            </div>
+                          </div>
+
+
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label>Countdown Timer <span class="color-red">*</span></label>
+                              <select class="form-control" id="countdown_timer" onchange="countdown_timer_validation()">
+                                <option>Please select Countdown timer</option>
+                                <option value="0">0 Minutes</option>
+                                <option value="2">2 Minutes</option>
+                                <option value="5">5 Minutes</option>
+                                <option value="10">10 Minutes</option>
+                                <option value="15">15 Minutes</option>
+                                <option value="20">20 Minutes</option>
+                                <option value="30">30 Minutes</option>
+                              </select>
+                               <label id="countdown_timer_error" style="display: none;color: red;"></label>
+                            </div>
+                          </div>
+                          
+
+                          
+                        </div>
+                        <div class="row form-row">
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label>Department <span class="color-red">*</span></label>
+                              <select class="form-control" id="department" onchange="department_validation()">
+                                <option>Please select department</option>
+                                {% for dept in departments %}
+                                  <option value="{{dept.id}}">{{dept.departments}}</option>
+                                {% endfor %}
+                              </select>
+                              <label id="department_error" style="display: none;color: red;"></label>
+                            </div>
+                          </div>
+                          
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label>Function <span class="color-red">*</span></label>
+                              <select class="form-control" id="function" onchange="function_validation()">
+                                <option>Please select function</option>
+                                {% for i in functions %}
+                                  <option>{{i.function}}</option>
+                                {% endfor %}
+                              </select>
+                               <label id="function_error" style="display: none;color: red;"></label>
+                            </div>
+                          </div>
+                          
+                          <div class="col-lg-12">
+                            <div class="form-group">
+                              <label>IT Equipment Specification</label>
+                              <textarea type="text" class="form-control" placeholder="Add IT Equipment Specification" id="dummy_specification_line"
+                                required></textarea>
+                            </div>
+                          </div>
+  
+  
+                          <div class="col-lg-12">
+                            <div class="form-group">
+                              <label>Comments</label>
+                              <textarea type="text" class="form-control" placeholder="Add a comment" id="comment" required></textarea>
+                            </div>
+                          </div>
+  
+                          <div class="col-lg-12">
+                            <div class="form-group">
+                              <button type="button" class="d-sm-inline-block btn btn-sm btn-primary sbt-btn shadow-sm" id="add_emp_btn"> Submit </button>
+                            </div>
+                          </div>
+  
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Content Row -->
+  
+                </div>
+  
+  
+              </div>
+            </div>
+            <!-- Content Row -->
+  
+  
+  
+          </div>
+          <!-- /.container-fluid -->
+        </div>
+
+      </div>
+      <!-- End of Main Content -->
+
+
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="submit-msg alert modal fade" id="universal_msg_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close close-bntn" type="button" data-dismiss="modal" aria-label="Close">
+          <div class="close-btn">
+            <span aria-hidden="true">×</span>
+          </div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row form-row">
+          <div class="col-lg-12 text-center">
+              <p class="m-0" id="universal_msg">Employee added successfully</p>
+          </div>          
+        </div>
+      </div>
+      <div class="modal-footer border-top-0">
+        <button class="d-sm-inline-block btn btn-sm btn-primary sbt-btn close-bntn shadow-sm" type="button"  data-dismiss="modal"> Ok </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="submit-msg alert modal fade" id="universal_msg_modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close " type="button" data-dismiss="modal" aria-label="Close">
+          <div class="close-btn">
+            <span aria-hidden="true">×</span>
+          </div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row form-row">
+          <div class="col-lg-12 text-center">
+              <p class="m-0" id="universal_msg1">Employee added successfully</p>
+          </div>          
+        </div>
+      </div>
+      <div class="modal-footer border-top-0">
+        <button class="d-sm-inline-block btn btn-sm btn-primary sbt-btn  shadow-sm" type="button"  data-dismiss="modal"> Ok </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap core JavaScript-->
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- Core plugin JavaScript-->
+<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+<!-- Custom scripts for all pages-->
+<script src="{% static 'js/sb-admin-2.js' %}"></script>
+<script type="text/javascript">
+  $('#staff_mem_email1').val("")
+  $("#password").val("")
+
+    function accept_number(evt){
+      evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+
+    $('#countdown_timer option[value=10]').attr('selected','selected');
+
+    function phone_number1_validation(){       
+
+        phone_number = $("#staff_mem_phone1").val()
+         phone_number_1 = $("#staff_mem_phone2").val()
+        if (phone_number == ""){
+            $("#contact_number1_label").show()
+            $("#contact_number1_label").html("This field is required")
+            return false
+        }
+        else if (phone_number.length < 4 || phone_number.length >20){
+            $("#contact_number1_label").show()
+            $("#contact_number1_label").html("A phone number must contain 4-20 digits")
+            return false;
+        }
+        else if (phone_number == phone_number_1){
+            $("#contact_number1_label").show()
+            $("#contact_number1_label").html("Phone numbers should not be same")
+            return false;
+        }
+        else{
+            $("#contact_number1_label").hide()
+            return true;               
+        }
+    }
+
+    function phone_number2_validation(){
+
+        phone_number_1 = $("#staff_mem_phone1").val()
+        phone_number = $("#staff_mem_phone2").val()
+
+        if (phone_number != ""){
+            // $("#contact_number2_label").show()
+            // $("#contact_number2_label").html("This field is required")
+            // return false
+            if (phone_number.length < 4 || phone_number.length >20){
+                $("#contact_number2_label").show()
+                $("#contact_number2_label").html("A phone number must contain 4-20 digits")
+                return false;
+            }
+            else if (phone_number == phone_number_1){
+                $("#contact_number2_label").show()
+                $("#contact_number2_label").html("Phone numbers should not be same")
+                return false;
+            }
+            else{
+                $("#contact_number2_label").hide()
+                return true;               
+            }
+        }
+        else{
+                $("#contact_number2_label").hide()
+                return true;               
+            }
+        
+    }
+
+    function email1_validation(){
+        email = $('#staff_mem_email1').val()
+        email = $.trim(email)
+        email1 = $('#staff_mem_email2').val()
+        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+        if(email.length == '' || email.length == null) {
+            $("#error1_email").show()
+            $("#error1_email").html("This field is required");
+            return false;
+        }            
+        else if(regex.test(email)==false){
+            $("#error1_email").show()
+            $("#error1_email").html("Please enter a valid email address")
+            return false;
+        }
+        else if(email1 == email){
+            $("#error1_email").show()
+            $("#error1_email").html("Emails should not be same")
+            return false;
+        }
+        else{
+            $("#error1_email").hide()
+            return true;
+        }
+    }
+
+    function emai2_validation(){
+        email1 = $('#staff_mem_email1').val()
+        email = $('#staff_mem_email2').val()
+        email = $.trim(email)
+        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+        if(email.length != '' ) {
+            // $("#error2_email").show()
+            // $("#error2_email").html("This field is required");
+            // return false;
+            if(regex.test(email)==false){
+                $("#error2_email").show()
+                $("#error2_email").html("Please enter a valid email address")
+                return false;
+            }
+            else if(email1 == email){
+                $("#error2_email").show()
+                $("#error2_email").html("Emails should not be same")
+                return false;
+            }
+            else{
+                $("#error2_email").hide()
+                return true;
+            }
+        }            
+        else {
+          $("#error2_email").hide()
+          return true;
+        }
+        
+    }
+
+    function password_validation(){
+        password = $("#password").val();
+        if(password.length == '' || password.length == null) {
+            $("#password_label").show()
+            $("#password_label").html("This field is required");
+            return false;
+        }
+        else{
+            if(password.length > 20 || password.length < 6){
+                $("#password_label").show()
+                $("#password_label").html("Password must contain 6 to 20 characters");
+                return false;
+            }
+            else if(!!~password.indexOf(' ')){
+                $("#password_label").show()
+                $("#password_label").html("Password must not contain white spaces");
+                return false;
+            }
+            else{
+                $("#password_label").hide()
+                return true;
+            }
+        }
+    };
+
+    function full_name_validation(){
+        var full_name_regex = /^[a-zA-Z ]+$/;
+        full_name = $('#staff_mem_name').val()
+        full_name = $.trim(full_name)
+        if(full_name == '' || full_name == null) {
+            $("#emergency_contact_person_error").show()
+            $("#emergency_contact_person_error").html("This field is required");               
+            return false;
+        }
+        else if(full_name_regex.test(full_name) == false){
+            $("#emergency_contact_person_error").show()
+            $("#emergency_contact_person_error").html("Name must not contain numbers or any special characters");
+            return false;                
+        }
+
+        else if (full_name.length < 3){
+          $("#emergency_contact_person_error").show()
+          $("#emergency_contact_person_error").html("Name must contain more than 3 characters");
+          return false;
+      }
+      else if(full_name.length > 50){
+          $("#emergency_contact_person_error").show()
+          $("#emergency_contact_person_error").html("Name must contain less than 50 characters");
+          return false; 
+      }
+        else{
+            $("#emergency_contact_person_error").hide()
+            return true;
+        }
+    }
+
+    function department_validation(){
+      dept = $("#department option:selected").text()
+      if(dept == "Please select department"){
+        $("#department_error").html("Please select department")
+        $("#department_error").show()
+        return false
+      }
+      else{
+        $("#department_error").hide()
+        return true
+      }
+    }
+
+    function function_validation(){
+      function_ = $("#function option:selected").text()
+      if(function_ == "Please select function"){
+        $("#function_error").html("Please select function")
+        $("#function_error").show()
+        return false
+      }
+      else{
+        $("#function_error").hide()
+        return true
+      }
+    }
+
+    function timezone_validation(){
+      timezone = $("#staff_timezone option:selected").text()
+      if(timezone == "Please select Staff's timezone"){
+        $("#timezone_error").html("Please select Staff's timezone")
+        $("#timezone_error").show()
+        return false
+      }
+      else{
+        $("#timezone_error").hide()
+        return true
+      }
+    }
+
+    function city_validation(){
+      city = $("#city option:selected").text()
+      if(city == "Please select city"){
+        $("#city_error").html("Please select city")
+        $("#city_error").show()
+        return false
+      }
+      else{
+        $("#city_error").hide()
+        return true
+      }
+    }
+
+    function countdown_timer_validation(){
+      countdown_timer = $("#countdown_timer option:selected").text()
+      if(countdown_timer == "Please select Countdown timer"){
+        $("#countdown_timer_error").html("Please select this field")
+        $("#countdown_timer_error").show()
+        return false
+      }
+      else{
+        $("#countdown_timer_error").hide()
+        return true
+      }
+    }
+
+    user_id = "{{request.user.id}}"
+    $('#add_emp_btn').click(function(){
+       full_name_validation()
+        email1_validation()
+        emai2_validation()
+        phone_number1_validation()
+        phone_number2_validation()
+        password_validation()
+        department_validation()
+        function_validation()
+        timezone_validation()
+        city_validation()
+        countdown_timer_validation()
+
+        if (full_name_validation() && email1_validation() && emai2_validation() && phone_number1_validation() && phone_number2_validation() && password_validation() && department_validation() && function_validation() && timezone_validation() && city_validation() && countdown_timer_validation()){
+            $.ajax({
+              type: 'POST',
+              url: "{% url 'add_employee' %}",
+              data: {
+                  "manager_id": user_id,
+                  "name" : $("#staff_mem_name").val(),
+                  "email1" : $('#staff_mem_email1').val(),
+                  "email2" : $('#staff_mem_email2').val(),
+                  "phone1" :$("#staff_mem_phone1").val(),
+                  "phone2" : $("#staff_mem_phone2").val(),
+                  "password" : $("#password").val(),
+                  "dummy_specification_line" : $("#dummy_specification_line").val(),
+                  "comment" : $("#comment").val(),
+                  "staff_timezone" : $("#staff_timezone option:selected").text(),
+                  "city" : $("#city option:selected").text(),
+                  "countdown_timer": $("#countdown_timer option:selected").val(),
+                  "function" : $("#function option:selected").text(),
+                  "department" : $("#department option:selected").text(),
+                  "department_id" : $("#department option:selected").val(),
+              },
+              success: function(response){
+                  if(response == 1){
+                    // id="universal_msg">Employee added successfully</p>
+                    $("#universal_msg").html("Employee added successfully")
+                    $("#universal_msg_modal").modal("show")
+                  }
+                  if(response == "already_exist"){
+                    $("#universal_msg1").html("Email 1 already exist. Please try with different email.")
+                    $("#universal_msg_modal1").modal("show")
+              }
+                  }
+          });
+        }          
+    });
+  
+
+    $(".close-bntn").click(function(){
+        location.href = "{% url 'manager_dashboard' %}";
+    })
+
+ 
+  </script>
+   {% endblock %}

@@ -51,6 +51,7 @@ urlpatterns = [
 	path('no_permission',csrf_exempt(NoPermission.as_view()),name='no_permission'),
 	# path('sort_by_document',csrf_exempt(SortByDocument.as_view()),name='sort_by_document'),
 	path('manager_profile',csrf_exempt(ManagerProfile.as_view()),name='manager_profile'),
+	path('reporting_module/<int:id>',csrf_exempt(ReportingModule.as_view()),name='reporting_module'),
 
 	path('change_staff_pass',csrf_exempt(ChangeStaffPassword.as_view()),name='change_staff_pass'),
 	path('change_manager_pass',csrf_exempt(ChangeManagerPassword.as_view()),name='change_manager_pass'),
@@ -67,7 +68,7 @@ urlpatterns = [
 	path('user_alert',csrf_exempt(UserAlert.as_view()),name='user_alert'),
 	path('user_comment',csrf_exempt(StaffUserComments.as_view()),name='user_comment'),
 	path('acknowledge_task',csrf_exempt(AcknowledgedTasks.as_view()),name='acknowledge_task'),
-	path('add_schedle_time',csrf_exempt(ScheduleTime.as_view()),name='add_schedle_time'),
+	path('add_schedle_time',csrf_exempt(SchedulerTime.as_view()),name='add_schedle_time'),
 
 	path('task_list/<int:id>',csrf_exempt(TaskList.as_view()),name='task_list'),
 	path('attendence_record/<int:id>',csrf_exempt(AttendenceRecord.as_view()),name='attendence_record'),

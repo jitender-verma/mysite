@@ -81,19 +81,13 @@ LOGOUT_REDIRECT_URL = "/login"
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'screenmonitor',
         'USER': 'root',
-        'PASSWORD': 'hO1U$J!fUEDiw',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '',
     }
@@ -160,8 +154,10 @@ STATICFILES_DIRS = [
 MEDIA_ROOT = os.path.join(BASE_DIR,'MEDIA')
 MEDIA_URL = "/media/"
 
-DEFAULT_STORAGE = "/var/www/html/mysite/MEDIA"
+DEFAULT_STORAGE = "/home/support/Documents/SAM NEW/mysite/MEDIA"
+PROFILE_IMAGE_PATH = "/home/support/Documents/SAM NEW/mysite/static/profile_pictures/"
 
 
-
-SOCKET_URL = "wss://teamconnecthub.net"
+# SOCKET_URL = "wss://teamconnecthub.net"
+SOCKET_URL = "ws://192.168.25.33:9001"
+DATA_UPLOAD_MAX_MEMORY_SIZE = 55242880
